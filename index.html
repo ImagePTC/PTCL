@@ -3,46 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRECON | Premium Industrial Design</title>
+    <title>PRECON | Industrial Excellence</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="video-background">
+    <div id="cursor-custom"></div>
+
+    <div class="main-bg">
         <video autoplay muted loop playsinline>
             <source src="images/video (1).mp4" type="video/mp4">
         </video>
-        <div class="overlay"></div>
+        <div class="grain-overlay"></div>
     </div>
 
-    <nav class="nav-bar">
-        <div class="logo">PRECON</div>
-        <div class="nav-controls">
-            <input type="text" id="searchInput" placeholder="Search our collection..." onkeyup="filterProducts()">
-            <select id="categoryFilter" onchange="filterProducts()">
-                <option value="All">All Parts</option>
-                <option value="PTCL">PTCL Series</option>
-            </select>
+    <header>
+        <div class="logo-area">PRECON</div>
+        <div class="search-wrapper">
+            <input type="text" id="searchInput" placeholder="FIND COMPONENT..." onkeyup="filterProducts()">
         </div>
-    </nav>
+    </header>
 
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1 class="reveal-text">FUTURE OF CASTING</h1>
-            <p>Engineered for excellence. Crafted for durability.</p>
-            <div class="scroll-indicator"></div>
+    <section class="hero">
+        <div class="hero-text">
+            <h2 class="stroke-text">QUALITY</h2>
+            <h1>CASTING</h1>
+            <p>ADVANCED FOUNDRY SOLUTIONS FOR THE FUTURE</p>
         </div>
     </section>
 
-    <main class="main-container">
-        <div class="gallery-grid" id="gallery">
+    <div class="showcase-section">
+        <div class="grid-container" id="gallery">
             </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 PRECON PRODUCT. All Rights Reserved.</p>
-    </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
