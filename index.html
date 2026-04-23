@@ -3,49 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRECON | Premium Industrial Castings</title>
+    <title>PRECON | Premium Industrial Design</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="video-wrapper">
-        <video autoplay muted loop playsinline id="bg-video">
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
             <source src="images/video (1).mp4" type="video/mp4">
         </video>
         <div class="overlay"></div>
     </div>
 
-    <div class="floating-bg">
-        <div class="float-item item-1"><img src="images/image1.png" alt=""></div>
-        <div class="float-item item-2"><img src="images/image2.png" alt=""></div>
-    </div>
-
-    <nav class="navbar">
-        <div class="logo">PRECON<span>PRODUCT</span></div>
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search Items..." onkeyup="filterProducts()">
+    <nav class="nav-bar">
+        <div class="logo">PRECON</div>
+        <div class="nav-controls">
+            <input type="text" id="searchInput" placeholder="Search our collection..." onkeyup="filterProducts()">
+            <select id="categoryFilter" onchange="filterProducts()">
+                <option value="All">All Parts</option>
+                <option value="PTCL">PTCL Series</option>
+            </select>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-text">
-            <h1 class="big-title">PRECISION IN MOTION</h1>
-            <p>Quality Casting. Unmatched Durability.</p>
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="reveal-text">FUTURE OF CASTING</h1>
+            <p>Engineered for excellence. Crafted for durability.</p>
+            <div class="scroll-indicator"></div>
         </div>
     </section>
 
-    <div class="filter-tabs">
-        <select id="categoryFilter" onchange="filterProducts()">
-            <option value="All">ALL PRODUCTS</option>
-            <option value="PTCL">PTCL SERIES</option>
-        </select>
-    </div>
-
-    <main class="container">
-        <div class="gallery" id="gallery">
+    <main class="main-container">
+        <div class="gallery-grid" id="gallery">
             </div>
     </main>
+
+    <footer>
+        <p>&copy; 2026 PRECON PRODUCT. All Rights Reserved.</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
