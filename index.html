@@ -3,39 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRECON | Ultra-3D Industrial</title>
+    <title>PRECON | Industrial Evolution</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@300;400;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="bg-wrapper">
-        <div class="glow-point"></div>
-        <video autoplay muted loop playsinline id="hero-vid">
+    <div class="video-overlay">
+        <video autoplay muted loop playsinline>
             <source src="images/video (1).mp4" type="video/mp4">
         </video>
+        <div class="v-mask"></div>
     </div>
 
-    <nav class="glass-nav">
-        <div class="brand">PRECON <small>PRO</small></div>
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="SEARCH 3D MODELS..." onkeyup="filterProducts()">
+    <nav class="top-nav">
+        <div class="logo">PRECON</div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search Components..." onkeyup="filterProducts()">
         </div>
     </nav>
 
-    <section class="hero-3d">
-        <div class="hero-info">
-            <h1 class="split-text">PRECISION</h1>
-            <p>ADVANCED STEEL FOUNDRY & CASTING</p>
-        </div>
+    <section class="hero-box">
+        <h1 class="glitch-text">ENGINEERING</h1>
+        <p>REDEFINING THE FUTURE OF STEEL FOUNDRY</p>
     </section>
 
-    <main class="grid-section">
-        <div id="gallery" class="product-wrap">
+    <div class="container">
+        <div class="product-grid" id="gallery">
             </div>
-    </main>
+    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
