@@ -3,39 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRECON TECHNOLOGY</title>
+    <title>PRECON TECHNOLOGY AND CASTINGS LTD.</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;400;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <nav class="main-nav">
-        <div class="brand-box">
-            <img src="wmremove-transformed.jpg" alt="Logo" class="main-logo">
-            <span class="brand-name">PRECON</span>
+    <nav class="glass-header">
+        <div class="nav-left">
+            <img src="wmremove-transformed.jpg" alt="Logo" class="logo-img">
+            <span class="brand-text">PRECON</span>
         </div>
         
-        <div class="nav-actions">
-            <select id="categoryFilter" onchange="filterProducts()">
+        <div class="nav-center">
+            <select id="catDropdown" onchange="filterItems()">
                 <option value="All">All Categories</option>
                 <option value="PTCL">PTCL Series</option>
-                <option value="Castings">Heavy Castings</option>
+                <option value="Castings">Foundry Castings</option>
             </select>
-            <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterProducts()">
+        </div>
+
+        <div class="nav-right">
+            <input type="text" id="searchBar" placeholder="Search Components..." onkeyup="filterItems()">
         </div>
     </nav>
 
-    <header class="hero-center">
-        <h1 class="main-title">PRECON TECHNOLOGY AND CASTINGS LTD.</h1>
-        <p class="subtitle">Precision Engineering | Industrial Excellence</p>
+    <header class="main-hero">
+        <div class="hero-content">
+            <p class="tagline">ENGINEERED PRECISION</p>
+            <h1 class="company-name">PRECON TECHNOLOGY AND CASTINGS LTD.</h1>
+            <div class="line-decorator"></div>
+        </div>
     </header>
 
-    <div class="slider-wrapper">
-        <div class="horizontal-container" id="gallery">
+    <section class="slider-section">
+        <div class="horizontal-scroll" id="productGrid">
             </div>
-    </div>
+    </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <footer class="minimal-footer">
+        <p>&copy; 2026 PRECON TECHNOLOGY. ADVANCED FOUNDRY SOLUTIONS.</p>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
