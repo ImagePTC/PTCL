@@ -1,170 +1,169 @@
-/* Variables */
 :root {
-    --primary: #ffffff;
-    --accent: #f5d300; /* Gold/Industrial Yellow */
-    --bg-dark: #000000;
+    --bg-color: #0a0a0a;
+    --text-color: #ffffff;
+    --accent: #f5f5f7; /* Apple/Squarespace style white-grey */
+    --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
 }
 
 body {
     margin: 0;
-    padding: 0;
-    font-family: 'Montserrat', sans-serif;
-    background-color: var(--bg-dark);
-    color: white;
-    overflow-x: hidden;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
-/* Video & Floating Effects */
-.video-wrapper {
+/* Background Video */
+.video-background {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     z-index: -2;
 }
 
-#bg-video {
+video {
     width: 100%; height: 100%; object-fit: cover;
-    filter: brightness(0.4);
 }
 
 .overlay {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.2), rgba(0,0,0,0.9));
+    background: rgba(0, 0, 0, 0.6); /* Cinematic dimming */
 }
 
-/* Floating Background Motion */
-.floating-bg .float-item {
+/* Navbar Style */
+.nav-bar {
     position: fixed;
-    opacity: 0.1;
-    z-index: -1;
-    animation: floatMove 20s infinite alternate ease-in-out;
-}
-
-.item-1 { top: 10%; left: 5%; width: 200px; }
-.item-2 { bottom: 10%; right: 5%; width: 250px; }
-
-@keyframes floatMove {
-    0% { transform: translateY(0) rotate(0deg); }
-    100% { transform: translateY(-50px) rotate(10deg); }
-}
-
-/* Navbar */
-.navbar {
+    top: 0; width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 5%;
-    position: sticky;
-    top: 0;
+    padding: 30px 5%;
     z-index: 100;
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(10px);
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
 }
 
 .logo {
-    font-family: 'Oswald', sans-serif;
-    font-size: 28px;
-    letter-spacing: 2px;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 4px;
 }
 
-.logo span { color: var(--accent); }
+.nav-controls {
+    display: flex;
+    gap: 20px;
+}
 
-.search-box input {
-    background: #111;
-    border: 1px solid #333;
-    padding: 10px 20px;
+.nav-controls input, .nav-controls select {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
-    border-radius: 25px;
-    width: 250px;
+    padding: 10px 20px;
+    border-radius: 50px; /* Pill shape like Squarespace */
+    backdrop-filter: blur(10px);
 }
 
-/* Hero Section */
-.hero {
-    height: 60vh;
+/* Hero Content */
+.hero-section {
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
 }
 
-.big-title {
-    font-size: clamp(50px, 10vw, 100px);
+.hero-content h1 {
+    font-size: clamp(40px, 8vw, 120px);
     font-weight: 800;
     margin: 0;
     letter-spacing: -2px;
-    line-height: 1;
 }
 
-/* Grid & Cards (Nike Style) */
-.container {
-    padding: 50px 5%;
+/* Product Grid */
+.main-container {
+    padding: 100px 5%;
+    background-color: #fff; /* White background section for products */
+    color: #000;
 }
 
-.gallery {
+.gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 60px;
 }
 
+/* Product Card - The Nike/Squarespace Look */
 .product {
-    position: relative;
-    background: #0a0a0a;
-    border: 1px solid #1a1a1a;
-    padding: 40px 20px;
-    border-radius: 4px;
     text-align: center;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition);
     cursor: pointer;
-    overflow: hidden;
+    padding-bottom: 20px;
 }
 
-/* Cursor Hover Effect - Scale Increase */
-.product:hover {
-    background: #111;
-    transform: scale(1.03); /* Card scales up slightly */
-    border-color: var(--accent);
+.product-img-container {
+    background-color: #f5f5f7; /* Light grey base for products */
+    border-radius: 4px;
+    padding: 50px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .product img {
-    width: 90%;
-    height: 250px;
+    width: 100%;
+    max-height: 300px;
     object-fit: contain;
-    transition: transform 0.6s ease;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+    transition: var(--transition);
 }
 
-/* Image specifically grows on hover */
+/* Hover Effect: Image Grows and Card Elevates */
+.product:hover {
+    transform: translateY(-10px);
+}
+
 .product:hover img {
-    transform: scale(1.15) rotate(-2deg);
+    transform: scale(1.1);
 }
 
 .product p {
-    margin-top: 25px;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: uppercase;
     letter-spacing: 1px;
-    color: #999;
-    transition: color 0.3s;
 }
 
-.product:hover p {
-    color: var(--accent);
+/* Scroll Animation */
+.scroll-indicator {
+    width: 2px;
+    height: 60px;
+    background: white;
+    margin: 40px auto;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Category Dropdown */
-.filter-tabs {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+.scroll-indicator::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--accent);
+    animation: scrollMove 2s infinite;
 }
 
-.filter-tabs select {
-    background: transparent;
-    color: white;
-    border: none;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-    border-bottom: 2px solid var(--accent);
-    padding-bottom: 5px;
+@keyframes scrollMove {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+footer {
+    padding: 50px;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    background: #fff;
 }
