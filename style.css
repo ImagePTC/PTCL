@@ -1,113 +1,100 @@
 :root {
-    --primary: #ffffff;
-    --accent: #f4d03f;
-    --dark: #050505;
+    --gold: #FFD700;
+    --dark-bg: #080808;
+    --glass: rgba(255, 255, 255, 0.05);
 }
 
-* {
-    margin: 0; padding: 0; box-sizing: border-box;
-    cursor: none; /* Hide default cursor to use custom one */
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    background-color: var(--dark);
-    font-family: 'Inter', sans-serif;
-    color: var(--primary);
+    background: var(--dark-bg);
+    color: white;
+    font-family: 'Space Grotesk', sans-serif;
     overflow-x: hidden;
 }
 
-/* Custom Cursor */
-#cursor-custom {
-    width: 20px; height: 20px;
-    background: var(--accent);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.1s ease, background 0.3s ease;
-}
-
-/* Background & Grain Effect */
-.main-bg {
+/* Background & Lighting */
+.bg-wrapper {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
 }
 
-video { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(0.3); }
+#hero-vid { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.2) contrast(1.2); }
 
-.grain-overlay {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-    opacity: 0.2; pointer-events: none;
+.glow-point {
+    position: absolute; top: 50%; left: 50%; width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+    transform: translate(-50%, -50%); z-index: -1;
 }
 
-/* Header */
-header {
+/* Floating Navigation */
+.glass-nav {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 40px 6%; position: fixed; width: 100%; z-index: 100;
+    padding: 30px 6%; position: fixed; width: 100%; z-index: 100;
+    backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.logo-area { font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: 5px; }
+.brand { font-family: 'Syncopate', sans-serif; font-size: 20px; letter-spacing: 5px; color: var(--gold); }
 
-.search-wrapper input {
-    background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.3);
-    color: white; padding: 10px; font-size: 14px; letter-spacing: 2px; width: 200px; outline: none;
+.search-bar input {
+    background: transparent; border: 1px solid rgba(255,255,255,0.2);
+    color: white; padding: 12px 25px; border-radius: 4px; width: 300px; outline: none;
 }
 
 /* Hero Section */
-.hero {
-    height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
+.hero-3d { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+
+.split-text { font-family: 'Syncopate', sans-serif; font-size: clamp(50px, 12vw, 150px); letter-spacing: -5px; }
+
+/* Product Grid (3D Layout) */
+.grid-section { padding: 100px 6%; }
+
+.product-wrap {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 50px;
 }
 
-.stroke-text {
-    font-family: 'Syncopate', sans-serif; font-size: 10vw;
-    color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.5);
-    line-height: 0.8;
-}
-
-.hero h1 { font-family: 'Syncopate', sans-serif; font-size: 10vw; margin-top: -2vw; letter-spacing: -5px; }
-
-.hero p { letter-spacing: 10px; font-size: 12px; margin-top: 20px; opacity: 0.7; }
-
-/* Grid Showcase */
-.showcase-section { padding: 100px 6%; }
-
-.grid-container {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 80px;
-}
-
-/* Product Card - Professional & Clean */
-.product {
-    position: relative; overflow: hidden; height: 500px;
-    background: rgba(255,255,255,0.02);
-    border-top: 1px solid rgba(255,255,255,0.1);
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.product:hover { background: rgba(255,255,255,0.05); }
-
-.product-img {
-    width: 100%; height: 70%; display: flex; align-items: center; justify-content: center;
+/* THE 3D CARD */
+.product-card {
+    background: var(--glass);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
     padding: 40px;
+    text-align: center;
+    transform-style: preserve-3d; /* Important for 3D feel */
+    transition: box-shadow 0.5s;
+    position: relative;
+    cursor: pointer;
 }
 
-.product img {
-    max-width: 100%; max-height: 100%; object-fit: contain;
-    transition: transform 0.8s ease;
-    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));
+.product-card:hover {
+    box-shadow: 0 50px 80px rgba(0,0,0,0.5);
+    border-color: var(--gold);
 }
 
-/* NIKE STYLE IMAGE GROW */
-.product:hover img { transform: scale(1.2) rotate(3deg); }
-
-.product-info {
-    padding: 20px; text-align: left; position: absolute; bottom: 0; width: 100%;
-    background: linear-gradient(to top, black, transparent);
+/* Image 3D Layer */
+.product-card img {
+    width: 100%; height: 250px; object-fit: contain;
+    transform: translateZ(50px); /* Pushes image forward in 3D */
+    filter: drop-shadow(0 30px 50px rgba(0,0,0,1));
+    transition: transform 0.5s;
 }
 
-.product-info h3 { font-size: 22px; font-weight: 900; letter-spacing: 1px; }
-
-/* Responsive */
-@media (max-width: 768px) {
-    .grid-container { grid-template-columns: 1fr; }
-    .hero h1, .stroke-text { font-size: 15vw; }
+.product-card:hover img {
+    transform: translateZ(100px) scale(1.1); /* Jumps out on hover */
 }
+
+.product-card h3 {
+    margin-top: 30px; font-size: 18px; letter-spacing: 2px;
+    transform: translateZ(30px);
+    color: #ccc;
+}
+
+.product-card:hover h3 { color: var(--gold); }
+
+/* Shine Effect overlay */
+.product-card::after {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1), transparent);
+    pointer-events: none; opacity: 0; transition: opacity 0.5s;
+}
+
+.product-card:hover::after { opacity: 1; }
