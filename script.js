@@ -1,45 +1,23 @@
 const products = [
     { name: "AXLE HOUSING", image: "images/AXLE HOUSING.png" },
     { name: "BANJO", image: "images/Banjo.png" },
-    { name: "3-150 GV BW Body", image: "images/3-150 GV BW Body.png" },
-    { name: "SWIVEL PIN LH", image: "images/Swivel Pin LH.png" },
-    { name: "WHEEL HUB 31048", image: "images/WHEEL HUB CASTING 31048.png" },
-    { name: "10-600 GV BW Body", image: "images/10-600 gv bw body ALL.png" }
+    { name: "IDLER", image: "images/Idler.png" },
+    { name: "SUPPORT 4544550", image: "images/Support - 4544550.png" },
+    { name: "10-600 GV BW Body", image: "images/10-600 gv bw body ALL.png" },
+    { name: "WHEEL HUB 31048", image: "images/WHEEL HUB CASTING 31048.png" }
 ];
 
-const gallery = document.getElementById("gallery");
-const cursor = document.getElementById("cursor-custom");
-
-// Custom Cursor Movement
-document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-});
-
-// Product Display
 function displayProducts(list) {
+    const gallery = document.getElementById("gallery");
     gallery.innerHTML = list.map(p => `
-        <div class="product" onmouseenter="growCursor()" onmouseleave="shrinkCursor()">
-            <div class="product-img">
-                <img src="${p.image}" alt="${p.name}">
-            </div>
-            <div class="product-info">
-                <h3>${p.name}</h3>
-            </div>
+        <div class="product-card" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3">
+            <img src="${p.image}" alt="${p.name}">
+            <h3>${p.name}</h3>
         </div>
     `).join('');
-}
 
-function growCursor() {
-    cursor.style.transform = "scale(4)";
-    cursor.style.mixBlendMode = "difference";
-    cursor.innerHTML = "<span style='font-size:3px; color:black;'>VIEW</span>";
-}
-
-function shrinkCursor() {
-    cursor.style.transform = "scale(1)";
-    cursor.style.mixBlendMode = "normal";
-    cursor.innerHTML = "";
+    // Re-initialize Tilt on new elements
+    VanillaTilt.init(document.querySelectorAll(".product-card"));
 }
 
 function filterProducts() {
@@ -48,4 +26,7 @@ function filterProducts() {
     displayProducts(filtered);
 }
 
-window.onload = () => displayProducts(products);
+// Custom reveal animation on load
+window.onload = () => {
+    displayProducts(products);
+};
