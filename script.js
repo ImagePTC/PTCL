@@ -1,48 +1,44 @@
-const products = [
-    { name: "AXLE HOUSING", image: "images/AXLE HOUSING.png", cat: "PTCL" },
-    { name: "BANJO", image: "images/Banjo.png", cat: "PTCL" },
-    { name: "WHEEL HUB", image: "images/WHEEL HUB CASTING 31048.png", cat: "Castings" },
-    { name: "10-600 GV Body", image: "images/10-600 gv bw body ALL.png", cat: "Castings" },
-    { name: "SWIVEL PIN LH", image: "images/Swivel Pin LH.png", cat: "PTCL" },
-    { name: "SUPPORT", image: "images/Support - 4544550.png", cat: "PTCL" }
+const inventory = [
+    { name: "AXLE HOUSING", image: "images/AXLE HOUSING.png", category: "PTCL" },
+    { name: "BANJO", image: "images/Banjo.png", category: "PTCL" },
+    { name: "IDLER", image: "images/Idler.png", category: "PTCL" },
+    { name: "WHEEL HUB 31048", image: "images/WHEEL HUB CASTING 31048.png", category: "Castings" },
+    { name: "SWIVEL PIN LH", image: "images/Swivel Pin LH.png", category: "PTCL" },
+    { name: "10-600 GV BW BODY", image: "images/10-600 gv bw body ALL.png", category: "Castings" }
 ];
 
-const gallery = document.getElementById("gallery");
+const productGrid = document.getElementById("productGrid");
 
-function displayProducts(list) {
-    gallery.innerHTML = list.map(p => `
-        <div class="card">
-            <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x300/222/fff?text=IMAGE'">
-            <h3>${p.name}</h3>
+function renderGallery(items) {
+    productGrid.innerHTML = items.map(item => `
+        <div class="p-card">
+            <div class="img-container">
+                <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/400x300/111/fff?text=Foundry+Part'">
+            </div>
+            <h3>${item.name}</h3>
         </div>
     `).join('');
-
-    // GSAP Entrance Animation
-    gsap.from(".card", {
-        opacity: 0,
-        x: 100,
-        stagger: 0.1,
-        duration: 1,
-        ease: "power4.out"
-    });
 }
 
-function filterProducts() {
-    const query = document.getElementById("searchInput").value.toLowerCase();
-    const cat = document.getElementById("categoryFilter").value;
-    
-    const filtered = products.filter(p => {
-        return (cat === "All" || p.cat === cat) && 
-               p.name.toLowerCase().includes(query);
+function filterItems() {
+    const searchVal = document.getElementById("searchBar").value.toLowerCase();
+    const catVal = document.getElementById("catDropdown").value;
+
+    const filtered = inventory.filter(p => {
+        const matchSearch = p.name.toLowerCase().includes(searchVal);
+        const matchCat = (catVal === "All" || p.category === catVal);
+        return matchSearch && matchCat;
     });
-    displayProducts(filtered);
+
+    renderGallery(filtered);
 }
 
-// Enable Horizontal Scrolling with Mouse Wheel
-const scrollContainer = document.querySelector(".slider-wrapper");
-scrollContainer.addEventListener("wheel", (evt) => {
-    evt.preventDefault();
-    scrollContainer.scrollLeft += evt.deltaY;
+// Enable Smooth Mouse Wheel Horizontal Scrolling
+const scrollBox = document.querySelector(".slider-section");
+scrollBox.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    scrollBox.scrollLeft += e.deltaY;
 });
 
-window.onload = () => displayProducts(products);
+// Initial Load
+window.onload = () => renderGallery(inventory);
