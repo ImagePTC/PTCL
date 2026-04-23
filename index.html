@@ -1,34 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRECON TECHNOLOGY</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;400;800&display=swap" rel="stylesheet">
-</head>
 <body>
 
     <nav class="glass-header">
         <div class="nav-left">
             <img src="images/PTCL logo.png" alt="Logo" class="logo-img">
-            <span class="brand-text">PTCL</span>
-        </div>
-        <div class="nav-center">
-            <select id="catDropdown" onchange="filterItems()">
-                <option value="All">All Categories</option>
-                <option value="PTCL">PTCL Series</option>
-                <option value="Castings">Foundry Castings</option>
-            </select>
+            <span class="brand-text">PRECON</span>
         </div>
         <div class="nav-right">
             <input type="text" id="searchBar" placeholder="Search..." onkeyup="filterItems()">
         </div>
     </nav>
 
+    <section class="intro-section">
+        <div class="intro-container">
+            <h2>About Our Company</h2>
+            <p id="company-intro-text">
+                Welcome to PRECON TECHNOLOGY AND CASTINGS LTD. We specialize in high-quality industrial castings and precision engineering solutions. 
+                (Aap is paragraph ko kabhi bhi HTML file mein yahan se edit kar sakte hain).
+            </p>
+        </div>
+    </section>
+
     <header class="main-hero">
         <div class="hero-content">
-            <p class="tagline">ENGINEERED PRECISION</p>
             <h1 class="company-name">PRECON TECHNOLOGY AND CASTINGS LTD.</h1>
             <div class="line-decorator"></div>
         </div>
@@ -38,6 +31,15 @@
         <div class="horizontal-scroll" id="productGrid">
             </div>
     </section>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p class="address-text">
+                B-480 RIICO Industrial Area, Bhiwadi, Distt. Alwar, RAJASTHAN-301019, INDIA
+            </p>
+            <p class="copyright">© 2026 PRECON TECHNOLOGY. All Rights Reserved.</p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
