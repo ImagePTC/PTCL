@@ -1,7 +1,7 @@
 :root {
-    --accent: #ffcc00;
+    --gold: #ffcc00;
     --white: #ffffff;
-    --dark: #0a0a0a;
+    --dark: #080808;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -13,79 +13,86 @@ body {
     overflow-x: hidden;
 }
 
-/* Background Video */
-.video-overlay {
+/* Background Setup */
+.video-container {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
 }
 
-video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.25); }
+video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.3); }
 
-.v-mask {
+.overlay {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: radial-gradient(circle, transparent 20%, black 150%);
 }
 
-/* Nav & Search */
-.top-nav {
+/* Navbar */
+.navbar {
     display: flex; justify-content: space-between; align-items: center;
     padding: 30px 6%; position: fixed; width: 100%; z-index: 100;
+    backdrop-filter: blur(10px);
 }
 
-.logo { font-family: 'Syncopate', sans-serif; font-size: 22px; letter-spacing: 4px; color: var(--accent); }
+.logo { font-family: 'Syncopate', sans-serif; font-size: 20px; letter-spacing: 5px; color: var(--gold); }
 
-.search-container input {
+.search-bar input {
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px); color: white; padding: 12px 20px; border-radius: 30px;
-    outline: none; width: 250px; transition: 0.3s;
+    color: white; padding: 10px 20px; border-radius: 4px; outline: none; width: 250px;
 }
-
-.search-container input:focus { border-color: var(--accent); width: 300px; }
 
 /* Hero */
-.hero-box { height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.hero { height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
-.glitch-text { font-family: 'Syncopate', sans-serif; font-size: 8vw; letter-spacing: -2px; line-height: 1; }
+.hero h1 { font-family: 'Syncopate', sans-serif; font-size: 6vw; letter-spacing: -2px; }
 
-.hero-box p { letter-spacing: 8px; font-size: 11px; opacity: 0.6; margin-top: 10px; }
+.hero p { letter-spacing: 10px; font-size: 12px; opacity: 0.5; margin-top: 10px; }
 
-/* Product Grid with 3D Perspective */
-.container { padding: 50px 6%; perspective: 1000px; }
+/* 3D Grid Layout */
+.container { padding: 0 6% 100px; perspective: 1500px; }
 
-.product-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px;
+.grid {
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+    gap: 50px;
 }
 
 /* The 3D Hover Card */
 .card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 30px; border-radius: 2px;
-    text-align: center; position: relative;
-    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), background 0.3s;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 40px 20px;
+    border-radius: 4px;
+    text-align: center;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), background 0.4s;
     transform-style: preserve-3d;
+    cursor: pointer;
 }
 
 .card:hover {
-    background: rgba(255,255,255,0.07);
-    transform: rotateX(10deg) rotateY(-10deg) translateY(-10px);
-    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.08);
+    transform: rotateX(10deg) rotateY(-10deg) translateY(-15px);
+    border-color: var(--gold);
 }
 
+/* 3D Image Jumps Forward */
 .card img {
-    width: 100%; height: 220px; object-fit: contain;
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));
     transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5));
 }
 
-/* Image jumps forward on hover */
 .card:hover img {
-    transform: translateZ(60px) scale(1.1);
+    transform: translateZ(80px) scale(1.15);
 }
 
 .card h3 {
-    margin-top: 25px; font-size: 14px; font-weight: 300;
-    letter-spacing: 2px; opacity: 0.7; color: var(--white);
+    margin-top: 30px;
+    font-size: 14px;
+    letter-spacing: 3px;
+    font-weight: 400;
+    color: #888;
     text-transform: uppercase;
 }
 
-.card:hover h3 { opacity: 1; color: var(--accent); }
+.card:hover h3 { color: var(--gold); }
