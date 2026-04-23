@@ -3,27 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRECON | Ultra Premium</title>
+    <title>PRECON TECHNOLOGY</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;400;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="cursor"></div>
-
-    <nav class="glass-nav">
-        <div class="logo">PRECON<span>.</span></div>
-        <div class="nav-links">
-            <input type="text" id="search" placeholder="Search Components..." onkeyup="filterProducts()">
+    <nav class="main-nav">
+        <div class="brand-box">
+            <img src="wmremove-transformed.jpg" alt="Logo" class="main-logo">
+            <span class="brand-name">PRECON</span>
+        </div>
+        
+        <div class="nav-actions">
+            <select id="categoryFilter" onchange="filterProducts()">
+                <option value="All">All Categories</option>
+                <option value="PTCL">PTCL Series</option>
+                <option value="Castings">Heavy Castings</option>
+            </select>
+            <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterProducts()">
         </div>
     </nav>
 
-    <section class="main-stage">
-        <div class="bg-text">Casting</div>
-        <div class="horizontal-scroll" id="gallery">
-            </div>
-    </section>
+    <header class="hero-center">
+        <h1 class="main-title">PRECON TECHNOLOGY AND CASTINGS LTD.</h1>
+        <p class="subtitle">Precision Engineering | Industrial Excellence</p>
+    </header>
 
+    <div class="slider-wrapper">
+        <div class="horizontal-container" id="gallery">
+            </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
