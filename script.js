@@ -1,65 +1,71 @@
-// Exact file names from your GitHub 'images' folder
 const inventory = [
- { name: "AXLE HOUSING ", image: "images/AXLE HOUSING.png", category: "PTCL"   },
-
-  { name: "BANJO", image: "images/Banjo.png", category: "PTCL"   },
-   { name: "IDLER", image: "images/Idler.png", category: "PTCL"   },
-   { name: "PIVOT -RH", image: "images/Pivot RH.png", category: "PTCL"   },
-   { name: "SUPPORT 4544550", image: "images/Support - 4544550.png", category: "PTCL"   },
-   { name: "SUPPORT 2432461/62", image: "images/Support 2432461 & 62.png", category: "PTCL"   },
-   { name: "SWIVEL PIN LH", image: "images/Swivel Pin LH.png", category: "PTCL"   },
-   { name: "WHEEL FRONT", image: "images/Wheel Front-1.png", category: "PTCL"   },  
-     { name: "TOOTH POINT", image: "images/OEM ADAPTER.png", category: "PTCL"   }, 
-     { name: "OEM ADAPTER", image: "images/OEM TOOTH POINT.png", category: "PTCL"   }, 
-     { name: "OEM TOOTH POINT", image: "images/TOOTH POINT.png", category: "PTCL"   }, 
-       { name: "SUPPORT 31083", image: "images/SUPPORT 31083.png", category: "PTCL"   }, 
-       { name: "WHEEL HUB 31048", image: "images/WHEEL HUB CASTING 31048.png", category: "PTCL"   }, 
-     { name: "3-150 GV BW Body", image: "images/3-150 GV BW Body.png", category: "PTCL"   }, 
-       { name: "3-150 GV FL Body", image: "images/3-150 GV FL Body.png", category: "PTCL"   }, 
-       { name: "3-150 GV Wedge", image: "images/3-150 GV Wedge.png", category: "PTCL"   }, 
-       { name: "3-150 GV Yoke Cum Bnt SG", image: "images/3-150 GV Yoke Cum Bnt SG.png", category: "PTCL"   }, 
-       { name: "3-300 SV YOKE", image: "images/3-300 SV YOKE.png", category: "PTCL"   }, 
-       { name: "10-300 SV BW Body", image: "images/10-300 SV BW Body.png", category: "PTCL"   }, 
-       { name: "10-600 GV BONNET", image: "images/10-600 GV BONNET.png", category: "PTCL"   }, 
-       { name: "10-600 GV BW Body", image: "images/10-600 gv bw body ALL.png", category: "PTCL"   }, 
-       { name: "10-600 GV Wedge", image: "images/10-600 GV Wedge.png", category: "PTCL"   }, 
-       { name: "10-600 GV Yoke", image: "images/10-600 GV Yoke.png", category: "PTCL"   }, 
-       { name: "16-400 RV BW Body", image: "images/16-400 RV BW Body.png", category: "PTCL"   }, 
-       { name: "18-300 FV BW Body", image: "images/18-300 FV BW Body.png", category: "PTCL"   }, 
-       { name: "20-300 GV Yoke", image: "images/20-300 GV Yoke.png", category: "PTCL"   }, 
-       { name: "Cover", image: "images/All Cover.png", category: "PTCL"   }, 
+    { name: "10-300 SV BW Body", file: "10-300 SV BW Body.png" },
+    { name: "10-600 GV BONNET", file: "10-600 GV BONNET.png" },
+    { name: "10-600 GV Wedge", file: "10-600 GV Wedge.png" },
+    { name: "10-600 GV Yoke", file: "10-600 GV Yoke.png" },
+    { name: "10-600 GV Body ALL", file: "10-600 gv bw body ALL.png" },
+    { name: "16-400 RV BW Body", file: "16-400 RV BW Body.png" },
+    { name: "3-150 GV BW Body", file: "3-150 GV BW Body.png" }
 ];
 
 const productGrid = document.getElementById("productGrid");
+const slider = document.querySelector(".slider-section");
+let autoScroll;
+let isPaused = false;
 
 function renderGallery(items) {
-    if (!productGrid) return;
+    if(!productGrid) return;
     productGrid.innerHTML = items.map(item => `
         <div class="p-card">
             <div class="img-container">
-                <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/300x200/111/fff?text=Check+File+Name'">
+                <img src="images/${item.file}" alt="${item.name}" 
+                     onerror="this.src='https://via.placeholder.com/300x200/222/fff?text=Check+Image+Name'">
             </div>
             <h3>${item.name}</h3>
         </div>
     `).join('');
 }
 
+// --- AUTO PLAY LOGIC ---
+function startAutoScroll() {
+    autoScroll = setInterval(() => {
+        if (!isPaused) {
+            slider.scrollLeft += 2; // Speed control (2px per frame)
+            // Agar end tak pahuch jaye toh wapas shuruat mein aa jaye (Infinite Loop)
+            if (slider.scrollLeft >= (slider.scrollWidth - slider.clientWidth)) {
+                slider.scrollLeft = 0;
+            }
+        }
+    }, 20); // Smoothness control
+}
+
+// --- MANUAL INTERACTION CONTROLS ---
+
+// 1. Mouse Wheel se manual scroll (Wheel chalate hi auto ruk jayega)
+slider.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    isPaused = true; // Auto-play roko
+    slider.scrollLeft += e.deltaY;
+    
+    // 2 second baad dobara auto-play shuru karne ke liye (Optional)
+    clearTimeout(window.scrollTimeout);
+    window.scrollTimeout = setTimeout(() => { isPaused = false; }, 2000);
+});
+
+// 2. Mouse Hover par auto-play rokna (Taaki user image dekh sake)
+slider.addEventListener("mouseenter", () => { isPaused = true; });
+slider.addEventListener("mouseleave", () => { isPaused = false; });
+
+// 3. Mobile par touch karne par rokna
+slider.addEventListener("touchstart", () => { isPaused = true; });
+
+window.onload = () => {
+    renderGallery(inventory);
+    startAutoScroll();
+};
+
 function filterItems() {
     const s = document.getElementById("searchBar").value.toLowerCase();
-    const c = document.getElementById("catDropdown").value;
-    const filtered = inventory.filter(p => {
-        return p.name.toLowerCase().includes(s) && (c === "All" || p.category === c);
-    });
+    const filtered = inventory.filter(p => p.name.toLowerCase().includes(s));
     renderGallery(filtered);
 }
-
-// Mouse wheel horizontal scroll
-const slider = document.querySelector(".slider-section");
-if(slider) {
-    slider.addEventListener("wheel", (e) => {
-        e.preventDefault();
-        slider.scrollLeft += e.deltaY;
-    });
-}
-
-window.onload = () => renderGallery(inventory);
