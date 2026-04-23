@@ -3,33 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRECON | Industrial Product Gallery</title>
+    <title>PRECON | Premium Industrial Castings</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&family=Oswald:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="video-container">
+    <div class="video-wrapper">
         <video autoplay muted loop playsinline id="bg-video">
             <source src="images/video (1).mp4" type="video/mp4">
         </video>
         <div class="overlay"></div>
     </div>
 
-    <header class="hero">
-        <h1 class="main-heading">PRECON PRODUCT</h1>
-        <p class="sub-heading">Precision Casting & Industrial Solutions</p>
-    </header>
+    <div class="floating-bg">
+        <div class="float-item item-1"><img src="images/image1.png" alt=""></div>
+        <div class="float-item item-2"><img src="images/image2.png" alt=""></div>
+    </div>
 
-    <nav class="filter-bar">
-        <div class="filter-container">
-            <select id="categoryFilter" onchange="filterProducts()">
-                <option value="All">All Categories</option>
-                <option value="PTCL">PTCL</option>
-            </select>
-            <input type="text" id="searchInput" placeholder="Search industrial parts..." onkeyup="filterProducts()">
+    <nav class="navbar">
+        <div class="logo">PRECON<span>PRODUCT</span></div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search Items..." onkeyup="filterProducts()">
         </div>
     </nav>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h1 class="big-title">PRECISION IN MOTION</h1>
+            <p>Quality Casting. Unmatched Durability.</p>
+        </div>
+    </section>
+
+    <div class="filter-tabs">
+        <select id="categoryFilter" onchange="filterProducts()">
+            <option value="All">ALL PRODUCTS</option>
+            <option value="PTCL">PTCL SERIES</option>
+        </select>
+    </div>
 
     <main class="container">
         <div class="gallery" id="gallery">
