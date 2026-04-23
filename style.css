@@ -1,169 +1,113 @@
 :root {
-    --bg-color: #0a0a0a;
-    --text-color: #ffffff;
-    --accent: #f5f5f7; /* Apple/Squarespace style white-grey */
-    --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    --primary: #ffffff;
+    --accent: #f4d03f;
+    --dark: #050505;
 }
 
 * {
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
+    margin: 0; padding: 0; box-sizing: border-box;
+    cursor: none; /* Hide default cursor to use custom one */
 }
 
 body {
-    margin: 0;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    background-color: var(--dark);
+    font-family: 'Inter', sans-serif;
+    color: var(--primary);
+    overflow-x: hidden;
 }
 
-/* Background Video */
-.video-background {
+/* Custom Cursor */
+#cursor-custom {
+    width: 20px; height: 20px;
+    background: var(--accent);
+    border-radius: 50%;
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -2;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease, background 0.3s ease;
 }
 
-video {
-    width: 100%; height: 100%; object-fit: cover;
+/* Background & Grain Effect */
+.main-bg {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
 }
 
-.overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* Cinematic dimming */
+video { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(0.3); }
+
+.grain-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+    opacity: 0.2; pointer-events: none;
 }
 
-/* Navbar Style */
-.nav-bar {
-    position: fixed;
-    top: 0; width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px 5%;
-    z-index: 100;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+/* Header */
+header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 40px 6%; position: fixed; width: 100%; z-index: 100;
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: 800;
-    letter-spacing: 4px;
+.logo-area { font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: 5px; }
+
+.search-wrapper input {
+    background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.3);
+    color: white; padding: 10px; font-size: 14px; letter-spacing: 2px; width: 200px; outline: none;
 }
 
-.nav-controls {
-    display: flex;
-    gap: 20px;
+/* Hero Section */
+.hero {
+    height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
 }
 
-.nav-controls input, .nav-controls select {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 50px; /* Pill shape like Squarespace */
-    backdrop-filter: blur(10px);
+.stroke-text {
+    font-family: 'Syncopate', sans-serif; font-size: 10vw;
+    color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.5);
+    line-height: 0.8;
 }
 
-/* Hero Content */
-.hero-section {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+.hero h1 { font-family: 'Syncopate', sans-serif; font-size: 10vw; margin-top: -2vw; letter-spacing: -5px; }
+
+.hero p { letter-spacing: 10px; font-size: 12px; margin-top: 20px; opacity: 0.7; }
+
+/* Grid Showcase */
+.showcase-section { padding: 100px 6%; }
+
+.grid-container {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 80px;
 }
 
-.hero-content h1 {
-    font-size: clamp(40px, 8vw, 120px);
-    font-weight: 800;
-    margin: 0;
-    letter-spacing: -2px;
-}
-
-/* Product Grid */
-.main-container {
-    padding: 100px 5%;
-    background-color: #fff; /* White background section for products */
-    color: #000;
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 60px;
-}
-
-/* Product Card - The Nike/Squarespace Look */
+/* Product Card - Professional & Clean */
 .product {
-    text-align: center;
-    transition: var(--transition);
-    cursor: pointer;
-    padding-bottom: 20px;
+    position: relative; overflow: hidden; height: 500px;
+    background: rgba(255,255,255,0.02);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.product-img-container {
-    background-color: #f5f5f7; /* Light grey base for products */
-    border-radius: 4px;
-    padding: 50px;
-    margin-bottom: 20px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.product:hover { background: rgba(255,255,255,0.05); }
+
+.product-img {
+    width: 100%; height: 70%; display: flex; align-items: center; justify-content: center;
+    padding: 40px;
 }
 
 .product img {
-    width: 100%;
-    max-height: 300px;
-    object-fit: contain;
-    transition: var(--transition);
+    max-width: 100%; max-height: 100%; object-fit: contain;
+    transition: transform 0.8s ease;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));
 }
 
-/* Hover Effect: Image Grows and Card Elevates */
-.product:hover {
-    transform: translateY(-10px);
+/* NIKE STYLE IMAGE GROW */
+.product:hover img { transform: scale(1.2) rotate(3deg); }
+
+.product-info {
+    padding: 20px; text-align: left; position: absolute; bottom: 0; width: 100%;
+    background: linear-gradient(to top, black, transparent);
 }
 
-.product:hover img {
-    transform: scale(1.1);
-}
+.product-info h3 { font-size: 22px; font-weight: 900; letter-spacing: 1px; }
 
-.product p {
-    font-size: 18px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Scroll Animation */
-.scroll-indicator {
-    width: 2px;
-    height: 60px;
-    background: white;
-    margin: 40px auto;
-    position: relative;
-    overflow: hidden;
-}
-
-.scroll-indicator::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--accent);
-    animation: scrollMove 2s infinite;
-}
-
-@keyframes scrollMove {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(100%); }
-}
-
-footer {
-    padding: 50px;
-    text-align: center;
-    font-size: 12px;
-    color: #666;
-    background: #fff;
+/* Responsive */
+@media (max-width: 768px) {
+    .grid-container { grid-template-columns: 1fr; }
+    .hero h1, .stroke-text { font-size: 15vw; }
 }
