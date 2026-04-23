@@ -1,34 +1,38 @@
-// Product Data - Make sure your image names match the files in 'images' folder
 const products = [
-    { name: "AXLE HOUSING", image: "images/axle_housing.png" },
-    { name: "BANJO", image: "images/banjo.png" },
-    { name: "IDLER", image: "images/idler.png" },
-    { name: "SUPPORT STRUCTURE", image: "images/support.png" },
-    { name: "SWIVEL PIN LH", image: "images/swivel_pin.png" },
-    { name: "WHEEL HUB", image: "images/wheel_hub.png" },
-    { name: "VALVE BODY", image: "images/valve_body.png" }
+    { name: "AXLE HOUSING", image: "images/AXLE HOUSING.png", desc: "INDUSTRIAL GRADE" },
+    { name: "BANJO", image: "images/Banjo.png", desc: "PRECISION CASTING" },
+    { name: "WHEEL HUB", image: "images/WHEEL HUB CASTING 31048.png", desc: "HEAVY DUTY" },
+    { name: "VALVE BODY", image: "images/3-150 GV BW Body.png", desc: "FLOW CONTROL" },
+    { name: "SUPPORT", image: "images/Support - 4544550.png", desc: "STRUCTURAL" }
 ];
 
 const gallery = document.getElementById("gallery");
+const cursor = document.querySelector(".cursor");
 
-function displayProducts(list) {
-    if (!gallery) return;
-    
+// Custom Cursor
+document.addEventListener("mousemove", (e) => {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+});
+
+// Display
+function displayItems(list) {
     gallery.innerHTML = list.map(p => `
-        <div class="card">
-            <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x250/111/eee?text=IMAGE+NEEDED'">
-            <h3>${p.name}</h3>
+        <div class="item">
+            <div class="item-img-wrap">
+                <img src="${p.image}" alt="${p.name}">
+            </div>
+            <div class="item-info">
+                <h2>${p.name}</h2>
+                <p>${p.desc}</p>
+            </div>
         </div>
     `).join('');
 }
 
-function filterProducts() {
-    const query = document.getElementById("searchInput").value.toLowerCase();
-    const filtered = products.filter(p => p.name.toLowerCase().includes(query));
-    displayProducts(filtered);
-}
-
-// Initial Load
-document.addEventListener("DOMContentLoaded", () => {
-    displayProducts(products);
+// Mouse Scroll to Horizontal
+window.addEventListener("wheel", (e) => {
+    gallery.scrollLeft += e.deltaY;
 });
+
+displayItems(products);
