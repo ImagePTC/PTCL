@@ -3,41 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRECON | Industrial Excellence</title>
+    <title>PRECON | Ultra-3D Industrial</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div id="cursor-custom"></div>
-
-    <div class="main-bg">
-        <video autoplay muted loop playsinline>
+    <div class="bg-wrapper">
+        <div class="glow-point"></div>
+        <video autoplay muted loop playsinline id="hero-vid">
             <source src="images/video (1).mp4" type="video/mp4">
         </video>
-        <div class="grain-overlay"></div>
     </div>
 
-    <header>
-        <div class="logo-area">PRECON</div>
-        <div class="search-wrapper">
-            <input type="text" id="searchInput" placeholder="FIND COMPONENT..." onkeyup="filterProducts()">
+    <nav class="glass-nav">
+        <div class="brand">PRECON <small>PRO</small></div>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="SEARCH 3D MODELS..." onkeyup="filterProducts()">
         </div>
-    </header>
+    </nav>
 
-    <section class="hero">
-        <div class="hero-text">
-            <h2 class="stroke-text">QUALITY</h2>
-            <h1>CASTING</h1>
-            <p>ADVANCED FOUNDRY SOLUTIONS FOR THE FUTURE</p>
+    <section class="hero-3d">
+        <div class="hero-info">
+            <h1 class="split-text">PRECISION</h1>
+            <p>ADVANCED STEEL FOUNDRY & CASTING</p>
         </div>
     </section>
 
-    <div class="showcase-section">
-        <div class="grid-container" id="gallery">
+    <main class="grid-section">
+        <div id="gallery" class="product-wrap">
             </div>
-    </div>
+    </main>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
