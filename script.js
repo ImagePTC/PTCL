@@ -1,11 +1,12 @@
+// Product Data - Make sure your image names match the files in 'images' folder
 const products = [
-    { name: "AXLE HOUSING", image: "images/AXLE HOUSING.png" },
-    { name: "BANJO", image: "images/Banjo.png" },
-    { name: "IDLER", image: "images/Idler.png" },
-    { name: "PIVOT -RH", image: "images/Pivot RH.png" },
-    { name: "SUPPORT 4544550", image: "images/Support - 4544550.png" },
-    { name: "WHEEL HUB 31048", image: "images/WHEEL HUB CASTING 31048.png" },
-    { name: "10-600 GV BW Body", image: "images/10-600 gv bw body ALL.png" }
+    { name: "AXLE HOUSING", image: "images/axle_housing.png" },
+    { name: "BANJO", image: "images/banjo.png" },
+    { name: "IDLER", image: "images/idler.png" },
+    { name: "SUPPORT STRUCTURE", image: "images/support.png" },
+    { name: "SWIVEL PIN LH", image: "images/swivel_pin.png" },
+    { name: "WHEEL HUB", image: "images/wheel_hub.png" },
+    { name: "VALVE BODY", image: "images/valve_body.png" }
 ];
 
 const gallery = document.getElementById("gallery");
@@ -15,7 +16,7 @@ function displayProducts(list) {
     
     gallery.innerHTML = list.map(p => `
         <div class="card">
-            <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300?text=Industrial+Part'">
+            <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x250/111/eee?text=IMAGE+NEEDED'">
             <h3>${p.name}</h3>
         </div>
     `).join('');
@@ -27,7 +28,7 @@ function filterProducts() {
     displayProducts(filtered);
 }
 
-// Ensure products load correctly
+// Initial Load
 document.addEventListener("DOMContentLoaded", () => {
     displayProducts(products);
 });
