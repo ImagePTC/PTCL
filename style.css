@@ -40,7 +40,7 @@ input:focus { border-color: var(--accent); }
 
 
 /* Hero1 - Address Style */
-.main-hero {
+.main-hero1 {
     height: auto; /* Height kam kar di taki niche address ki tarah set ho jaye */
     display: flex; 
     align-items: center; 
