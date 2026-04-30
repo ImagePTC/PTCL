@@ -1,224 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRECON TECHNOLOGY</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;400;800&display=swap" rel="stylesheet">
-    <style>
-        /* UI Layout Fixes */
-        .main-hero { 
-            height: 20vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            margin-top: 80px; 
-        }
-        .hero-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .company-name { font-family: 'Syncopate', sans-serif; font-size: clamp(18px, 3.5vw, 40px); font-weight: 800; letter-spacing: -1px; text-transform: uppercase; margin: 2px 0; }
-        .tagline { font-size: 10px; letter-spacing: 4px; opacity: 0.7; text-transform: uppercase; }
-
-        /* Navbar Layout */
-        .glass-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 3%; position: fixed; width: 100%; top: 0; z-index: 1000;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        /* Icon & Button Styling */
-        .nav-icon {
-            color: #fff;
-            font-size: 18px;
-            text-decoration: none;
-            transition: 0.3s;
-            opacity: 0.8;
-            display: flex;
-            align-items: center;
-        }
-        .nav-icon:hover { color: #ff3333; opacity: 1; transform: translateY(-2px); }
-
-        .nav-btn {
-            background: rgba(255,255,255,0.08);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.15);
-            padding: 7px 14px;
-            border-radius: 4px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 11px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .nav-btn:hover { background: #ff3333; border-color: #ff3333; }
-
-        /* Modal (Pop-up) Styling */
-        .modal-overlay {
-            display: none; 
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            position: relative;
-            width: 95%;
-            max-width: 1100px;
-            height: 85vh;
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 30px;
-            color: #333;
-            cursor: pointer;
-            z-index: 2100;
-            transition: 0.3s;
-            background: rgba(255,255,255,0.9);
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-weight: bold;
-        }
-        .close-btn:hover { color: #ff3333; transform: rotate(90deg); }
-
-        #intFrame, #feedbackFrame {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* Fixed Footer Address */
-        .bottom-address-container {
-            position: fixed; bottom: 15px; left: 0; width: 100%;
-            display: flex; flex-direction: column; align-items: center; z-index: 100; pointer-events: none;
-        }
-        .footer-address { font-size: 10px; letter-spacing: 2px; opacity: 0.5; text-transform: uppercase; margin: 5px 0; color: #fff; text-align: center; }
-        .line-decorator { width: 30px; height: 1.5px; background: #ff3333; margin: 0 auto; }
-        
-        .slider-section { height: 55vh; display: flex; align-items: center; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRECON TECHNOLOGY - PTCL</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;400;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <nav class="glass-header">
-        <div class="nav-left">
-            <img src="images/PTCL logo.png" alt="Logo" class="logo-img">
-            <span class="brand-text">PTCL</span>
-        </div>
+    <nav class="glass-header">
+        <div class="nav-left">
+            <img src="images/PTCL logo.png" alt="Logo" class="logo-img">
+            <span class="brand-text">PTCL</span>
+        </div>
 
-        <div class="nav-center">
-            <select id="catDropdown" onchange="filterItems()">
-                <option value="All">All Categories</option>
-                <option value="PTCL">PTCL Series</option>
-                <option value="Castings">Foundry Castings</option>
-            </select>
-        </div>
+        <div class="nav-center">
+            <div class="search-container">
+                <select id="catDropdown" onchange="filterItems()">
+                    <option value="All">All Categories</option>
+                    <option value="PTCL">PTCL Series</option>
+                    <option value="Castings">Foundry Castings</option>
+                </select>
+                <div class="search-box">
+                    <input type="text" id="searchBar" placeholder="Search..." onkeyup="filterItems()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+            </div>
+        </div>
 
-        <div class="nav-right">
-            <input type="text" id="searchBar" placeholder="Search..." onkeyup="filterItems()">
-            
-            <a href="https://www.google.com/maps/..." target="_blank" class="nav-icon" title="Location">
-                <i class="fa-solid fa-location-dot"></i>
-            </a>
-            <a href="https://www.linkedin.com/..." target="_blank" class="nav-icon" title="LinkedIn">
-                <i class="fa-brands fa-linkedin"></i>
-            </a>
+        <div class="nav-right">
+            <a href="#" class="nav-icon"><i class="fa-solid fa-location-dot"></i></a>
+            <a href="#" class="nav-icon"><i class="fa-brands fa-linkedin"></i></a>
+            <button class="nav-btn btn-outline" onclick="showIntro()">Introduction</button>
+            <button class="nav-btn btn-solid" onclick="showFeedback()">Feedback</button>
+            <button class="nav-btn btn-solid red-btn">Contact Us</button>
+        </div>
+    </nav>
 
-            <button class="nav-btn" onclick="showIntro()">Introduction</button>
-            <button class="nav-btn" onclick="showFeedback()">Feedback</button>
-        </div>
-    </nav>
+    <!-- Modals (Intro & Feedback) -->
+    <div id="introModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeIntro()">&times;</span>
+            <iframe src="int.html" id="intFrame"></iframe>
+        </div>
+    </div>
+    <div id="feedbackModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeFeedback()">&times;</span>
+            <iframe src="feedback.html" id="feedbackFrame"></iframe>
+        </div>
+    </div>
 
-    <!-- Modal for Introduction -->
-    <div id="introModal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeIntro()">&times;</span>
-            <iframe src="int.html" id="intFrame"></iframe>
-        </div>
-    </div>
+    <header class="main-hero">
+        <div class="hero-content">
+            <p class="tagline">ENGINEERED PRECISION</p>
+            <h1 class="company-name">PRECON TECHNOLOGY AND CASTINGS LTD.</h1>
+        </div>
+    </header>
 
-    <!-- Modal for Feedback (Naya Addition) -->
-    <div id="feedbackModal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeFeedback()">&times;</span>
-            <iframe src="feedback.html" id="feedbackFrame"></iframe>
-        </div>
-    </div>
+    <main class="content-wrapper">
+        <section class="slider-container">
+            <div class="nav-arrow left-arrow"><i class="fa-solid fa-chevron-left"></i></div>
+            
+            <!-- Layered Slider Background -->
+            <div class="slider-layers">
+                <div class="layer layer-1"></div>
+                <div class="layer layer-2"></div>
+                <div class="layer layer-3">
+                    <div class="horizontal-scroll" id="productGrid">
+                        <!-- Product Cards will load here from script.js -->
+                        <!-- Example Structure below -->
+                        <div class="p-card">
+                            <div class="img-container">
+                                <img src="images/support.jpg" alt="Support">
+                            </div>
+                            <h3>SUPPORT 2432461/62</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <header class="main-hero">
-        <div class="hero-content">
-            <p class="tagline">ENGINEERED PRECISION</p>
-            <h1 class="company-name">PRECON TECHNOLOGY AND CASTINGS LTD.</h1>
-        </div>
-    </header>
+            <div class="nav-arrow right-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </section>
+    </main>
 
-    <section class="slider-section">
-        <div class="horizontal-scroll" id="productGrid">
-            <!-- Items load from script.js -->
-        </div>
-    </section>
+    <footer class="bottom-address-container">
+        <p class="footer-address">ADDRESS B-480 RIICO IND. AREA, BHIWADI, RAJASTHAN-301019, INDIA</p>
+        <div class="footer-decorators">
+            <div class="line-red"></div>
+            <div class="star-icon">✦</div>
+            <div class="line-red"></div>
+        </div>
+    </footer>
 
-    <footer class="bottom-address-container">
-        <p class="footer-address">ADDRESS B-480 RIICO IND. AREA, BHIWADI, RAJASTHAN-301019, INDIA</p>
-        <div class="line-decorator"></div>
-        <div class="line-decorator" style="margin-top: 3px;"></div>
-    </footer>
-
-    <script>
-        // --- Introduction Modal Logic ---
-        function showIntro() {
-            document.getElementById('introModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeIntro() {
-            document.getElementById('introModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // --- Feedback Modal Logic (Updated) ---
-        function showFeedback() {
-            document.getElementById('feedbackModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeFeedback() {
-            document.getElementById('feedbackModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Modal ke bahar click karne par band ho jaye
-        window.onclick = function(event) {
-            const introModal = document.getElementById('introModal');
-            const feedbackModal = document.getElementById('feedbackModal');
-            if (event.target == introModal) { closeIntro(); }
-            if (event.target == feedbackModal) { closeFeedback(); }
-        }
-    </script>
-    <script src="script.js"></script>
+    <script>
+        function showIntro() { document.getElementById('introModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function closeIntro() { document.getElementById('introModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        function showFeedback() { document.getElementById('feedbackModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function closeFeedback() { document.getElementById('feedbackModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        window.onclick = function(event) {
+            if (event.target.className === 'modal-overlay') { closeIntro(); closeFeedback(); }
+        }
+    </script>
+    <script src="script.js"></script>
 </body>
 </html>
