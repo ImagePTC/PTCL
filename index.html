@@ -5,79 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRECON TECHNOLOGY</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome Icons ke liye link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;400;800&display=swap" rel="stylesheet">
     <style>
-        /* Alignment Fixes */
-        .main-hero {
-            /* Height kam ki taaki text upar chala jaye */
-            height: 15vh; 
-            display: flex;
-            align-items: center; /* Vertical center alignment */
-            justify-content: center;
-            margin-top: 60px; /* Navbar ke neeche se thoda gap */
-            padding-bottom: 0;
+        /* Base styles from previous updates */
+        .main-hero { height: 20vh; display: flex; align-items: center; justify-content: center; margin-top: 80px; }
+        .hero-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .company-name { font-family: 'Syncopate', sans-serif; font-size: clamp(18px, 3.5vw, 40px); font-weight: 800; letter-spacing: -1px; text-transform: uppercase; margin: 2px 0; }
+        .tagline { font-size: 10px; letter-spacing: 4px; opacity: 0.7; text-transform: uppercase; }
+
+        /* Navbar Layout Update */
+        .glass-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 3%; position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .hero-content {
+        .nav-right {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            text-align: center;
+            gap: 15px;
         }
 
-        .company-name { 
-            font-family: 'Syncopate', sans-serif;
-            font-size: clamp(20px, 4vw, 45px); 
-            font-weight: 800; 
-            letter-spacing: -1px; 
-            text-transform: uppercase;
-            margin: 5px 0; /* Margin kam kiya spacing ke liye */
-        }
-
-        .tagline { 
-            font-size: 11px; 
-            letter-spacing: 4px; 
-            opacity: 0.7; 
-            text-transform: uppercase;
-        }
-
-        /* Footer Address Fixed at Bottom */
-        .bottom-address-container {
-            position: fixed;
-            bottom: 25px;
-            left: 0;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            pointer-events: none;
-        }
-
-        .footer-address {
-            font-size: 10px;
-            letter-spacing: 2px;
-            opacity: 0.6;
-            text-transform: uppercase;
-            margin: 8px 0;
+        /* Icon Styling */
+        .nav-icon {
             color: #fff;
-            text-align: center;
+            font-size: 18px;
+            text-decoration: none;
+            transition: 0.3s;
+            opacity: 0.8;
         }
+        .nav-icon:hover { color: #ff3333; opacity: 1; transform: translateY(-2px); }
 
-        .line-decorator {
-            width: 35px;
-            height: 1.5px;
+        /* Button Styling */
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 6px 15px;
+            border-radius: 5px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-btn:hover {
             background: #ff3333;
-            margin: 0 auto;
+            border-color: #ff3333;
         }
 
-        /* Slider section ko thoda aur upar laane ke liye */
-        .slider-section {
-            height: 45vh;
-            display: flex;
-            align-items: center;
+        /* Footer Address */
+        .bottom-address-container {
+            position: fixed; bottom: 15px; left: 0; width: 100%;
+            display: flex; flex-direction: column; align-items: center; z-index: 100; pointer-events: none;
         }
+        .footer-address { font-size: 10px; letter-spacing: 2px; opacity: 0.5; text-transform: uppercase; margin: 5px 0; color: #fff; text-align: center; }
+        .line-decorator { width: 30px; height: 1.5px; background: #ff3333; margin: 0 auto; }
+        
+        .slider-section { height: 55vh; display: flex; align-items: center; }
     </style>
 </head>
 <body>
@@ -87,6 +76,7 @@
             <img src="images/PTCL logo.png" alt="Logo" class="logo-img">
             <span class="brand-text">PTCL</span>
         </div>
+
         <div class="nav-center">
             <select id="catDropdown" onchange="filterItems()">
                 <option value="All">All Categories</option>
@@ -94,12 +84,25 @@
                 <option value="Castings">Foundry Castings</option>
             </select>
         </div>
+
         <div class="nav-right">
+            <!-- Search Bar -->
             <input type="text" id="searchBar" placeholder="Search..." onkeyup="filterItems()">
+            
+            <!-- Social Icons -->
+            <a href="https://maps.google.com/?q=B-480+RIICO+Industrial+Area+Bhiwadi" target="_blank" class="nav-icon" title="Location">
+                <i class="fa-solid fa-location-dot"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/your-profile" target="_blank" class="nav-icon" title="LinkedIn">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+
+            <!-- Action Buttons -->
+            <button class="nav-btn" onclick="showIntro()">Introduction</button>
+            <button class="nav-btn" onclick="showFeedback()">Feedback</button>
         </div>
     </nav>
 
-    <!-- Header Section (Now shifted up) -->
     <header class="main-hero">
         <div class="hero-content">
             <p class="tagline">ENGINEERED PRECISION</p>
@@ -113,15 +116,26 @@
         </div>
     </section>
 
-    <!-- Fixed Bottom Address -->
     <footer class="bottom-address-container">
         <p class="footer-address">
             ADDRESS B-480 RIICO IND. AREA, BHIWADI, RAJASTHAN-301019, INDIA
         </p>
         <div class="line-decorator"></div>
-        <div class="line-decorator" style="margin-top: 4px;"></div>
+        <div class="line-decorator" style="margin-top: 3px;"></div>
     </footer>
 
+    <script>
+        // Button Click Functions
+        function showIntro() {
+            alert("Precon Technology and Castings Ltd. (PTCL) is a leading manufacturer of high-quality foundry castings and industrial solutions based in Bhiwadi.");
+        }
+
+        function showFeedback() {
+            // Aap yahan ek modal ya naya form page open kar sakte hain
+            const email = "feedback@precontechnology.com";
+            window.location.href = `mailto:${email}?subject=Feedback regarding PTCL`;
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
