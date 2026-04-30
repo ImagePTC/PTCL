@@ -31,8 +31,8 @@
 
         <div class="nav-right">
             <!-- White Icons -->
-            <a href="#" class="nav-icon"><i class="fa-solid fa-location-dot"></i></a>
-            <a href="#" class="nav-icon"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="#FFFFFF" class="nav-icon"><i class="fa-solid fa-location-dot"></i></a>
+            <a href="#FFFFFF" class="nav-icon"><i class="fa-brands fa-linkedin"></i></a>
             <button class="nav-btn btn-outline" onclick="showIntro()">Introduction</button>
             <button class="nav-btn btn-solid" onclick="showFeedback()">Feedback</button>
             <button class="nav-btn btn-solid red-btn">Contact Us</button>
@@ -91,28 +91,33 @@
 
     <script src="script.js"></script>
     <script>
-        function showIntro() { 
-            document.getElementById('introModal').style.display = 'flex'; 
-            document.body.style.overflow = 'hidden';
-        }
-        function closeIntro() { 
-            document.getElementById('introModal').style.display = 'none'; 
-            document.body.style.overflow = 'auto';
-        }
-        function showFeedback() { 
-            document.getElementById('feedbackModal').style.display = 'flex'; 
-            document.body.style.overflow = 'hidden';
-        }
-        function closeFeedback() { 
-            document.getElementById('feedbackModal').style.display = 'none'; 
-            document.body.style.overflow = 'auto';
-        }
+     // --- Introduction Modal Logic ---
+        function showIntro() {
+            document.getElementById('introModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeIntro() {
+            document.getElementById('introModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
 
-        window.onclick = function(event) {
-            if (event.target.className === 'modal-overlay') {
-                closeIntro();
-                closeFeedback();
-            }
+        // --- Feedback Modal Logic (Updated) ---
+        function showFeedback() {
+            document.getElementById('feedbackModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeFeedback() {
+            document.getElementById('feedbackModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Modal ke bahar click karne par band ho jaye
+        window.onclick = function(event) {
+            const introModal = document.getElementById('introModal');
+            const feedbackModal = document.getElementById('feedbackModal');
+            if (event.target == introModal) { closeIntro(); }
+            if (event.target == feedbackModal) { closeFeedback(); }
+        }
         }
     </script>
 </body>
