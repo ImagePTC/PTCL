@@ -38,20 +38,6 @@
         </div>
     </nav>
 
-    <!-- Modals -->
-    <div id="introModal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeIntro()">&times;</span>
-            <iframe src="int.html" id="intFrame"></iframe>
-        </div>
-    </div>
-    <div id="feedbackModal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeFeedback()">&times;</span>
-            <iframe src="feedback.html" id="feedbackFrame"></iframe>
-        </div>
-    </div>
-
     <header class="main-hero">
         <div class="hero-content">
             <p class="tagline">ENGINEERED PRECISION</p>
@@ -67,13 +53,28 @@
             <div class="layer layer-2"></div>
             <div class="layer layer-3">
                 <div class="horizontal-scroll" id="productGrid">
-                    <!-- Cards will load from JS -->
+                    <!-- Cards will be injected by script.js -->
                 </div>
             </div>
         </div>
 
         <div class="nav-arrow right-arrow" onclick="moveSlider('right')"><i class="fa-solid fa-chevron-right"></i></div>
     </main>
+
+    <!-- Modals -->
+    <div id="introModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeIntro()">&times;</span>
+            <iframe src="int.html" id="intFrame"></iframe>
+        </div>
+    </div>
+
+    <div id="feedbackModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeFeedback()">&times;</span>
+            <iframe src="feedback.html" id="feedbackFrame"></iframe>
+        </div>
+    </div>
 
     <footer class="bottom-address-container">
         <p class="footer-address">ADDRESS B-480 RIICO IND. AREA, BHIWADI, RAJASTHAN-301019, INDIA</p>
@@ -86,10 +87,22 @@
 
     <script src="script.js"></script>
     <script>
-        function showIntro() { document.getElementById('introModal').style.display = 'flex'; }
-        function closeIntro() { document.getElementById('introModal').style.display = 'none'; }
-        function showFeedback() { document.getElementById('feedbackModal').style.display = 'flex'; }
-        function closeFeedback() { document.getElementById('feedbackModal').style.display = 'none'; }
+        function showIntro() { 
+            document.getElementById('introModal').style.display = 'flex'; 
+            document.body.style.overflow = 'hidden';
+        }
+        function closeIntro() { 
+            document.getElementById('introModal').style.display = 'none'; 
+            document.body.style.overflow = 'auto';
+        }
+        function showFeedback() { 
+            document.getElementById('feedbackModal').style.display = 'flex'; 
+            document.body.style.overflow = 'hidden';
+        }
+        function closeFeedback() { 
+            document.getElementById('feedbackModal').style.display = 'none'; 
+            document.body.style.overflow = 'auto';
+        }
     </script>
 </body>
 </html>
