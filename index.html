@@ -30,11 +30,13 @@
         </div>
 
         <div class="nav-right">
-            <!-- White Icons -->
-            <a href="#FFFFFF" class="nav-icon"><i class="fa-solid fa-location-dot"></i></a>
-            <a href="#FFFFFF" class="nav-icon"><i class="fa-brands fa-linkedin"></i></a>
-            <button class="nav-btn btn-outline" onclick="showIntro()">Introduction</button>
-            <button class="nav-btn btn-solid" onclick="showFeedback()">Feedback</button>
+            <!-- Icons (Conditions removed, link target changed to #) -->
+            <a href="#" class="nav-icon"><i class="fa-solid fa-location-dot"></i></a>
+            <a href="#" class="nav-icon"><i class="fa-brands fa-linkedin"></i></a>
+            
+            <!-- Buttons (onclick events removed) -->
+            <button class="nav-btn btn-outline">Introduction</button>
+            <button class="nav-btn btn-solid">Feedback</button>
             <button class="nav-btn btn-solid red-btn">Contact Us</button>
         </div>
     </nav>
@@ -60,26 +62,6 @@
         <div class="nav-arrow right-arrow" onclick="moveSlider('right')"><i class="fa-solid fa-chevron-right"></i></div>
     </main>
 
-    <!-- Modal for Introduction -->
-    <div id="introModal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeIntro()">&times;</span>
-            <div class="iframe-container">
-                <iframe src="int.html" id="intFrame"></iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for Feedback -->
-    <div id="feedbackModal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeFeedback()">&times;</span>
-            <div class="iframe-container">
-                <iframe src="feedback.html" id="feedbackFrame"></iframe>
-            </div>
-        </div>
-    </div>
-
     <footer class="bottom-address-container">
         <p class="footer-address">ADDRESS B-480 RIICO IND. AREA, BHIWADI, RAJASTHAN-301019, INDIA</p>
         <div class="footer-decorators">
@@ -89,36 +71,7 @@
         </div>
     </footer>
 
+    <!-- Sirf slider ki script rakhi hai -->
     <script src="script.js"></script>
-    <script>
-     // --- Introduction Modal Logic ---
-        function showIntro() {
-            document.getElementById('introModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeIntro() {
-            document.getElementById('introModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // --- Feedback Modal Logic (Updated) ---
-        function showFeedback() {
-            document.getElementById('feedbackModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeFeedback() {
-            document.getElementById('feedbackModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Modal ke bahar click karne par band ho jaye
-        window.onclick = function(event) {
-            const introModal = document.getElementById('introModal');
-            const feedbackModal = document.getElementById('feedbackModal');
-            if (event.target == introModal) { closeIntro(); }
-            if (event.target == feedbackModal) { closeFeedback(); }
-        }
-        }
-    </script>
 </body>
 </html>
