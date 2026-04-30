@@ -8,141 +8,140 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;400;800&display=swap" rel="stylesheet">
     <style>
-        /* UI Layout Fixes */
+        /* --- Color Variables from Reference Image --- */
+        :root {
+            --bg-dark: #1e2124;         /* Charcoal background */
+            --glass-bg: rgba(30, 33, 36, 0.9);
+            --ptcl-gold: #c5a059;       /* Metallic Gold from image text */
+            --ptcl-silver: #d1d1d1;     /* Silver/White text */
+            --ptcl-blue: #2c5e8c;       /* Logo Blue accent */
+            --ptcl-red: #b22222;        /* Logo Red accent */
+            --nav-border: rgba(197, 160, 89, 0.3);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--ptcl-silver);
+            margin: 0;
+            overflow-x: hidden;
+            /* Subtle gear background effect like image */
+            background-image: radial-gradient(circle at 50% 50%, rgba(44, 94, 140, 0.03) 0%, transparent 50%);
+        }
+
+        /* --- Navbar Update --- */
+        .glass-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 4%; position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: linear-gradient(to bottom, #3a4149, var(--bg-dark)); /* Brushed metal effect */
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--nav-border);
+            box-sizing: border-box;
+        }
+
+        .brand-text { color: var(--ptcl-silver); font-weight: 800; letter-spacing: 2px; margin-left: 10px; }
+
+        #catDropdown, #searchBar {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--ptcl-blue);
+            color: var(--ptcl-silver);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* --- Hero Section Update --- */
         .main-hero { 
-            height: 20vh; 
+            height: 25vh; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            margin-top: 80px; 
+            margin-top: 100px; 
         }
-        .hero-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .company-name { font-family: 'Syncopate', sans-serif; font-size: clamp(18px, 3.5vw, 40px); font-weight: 800; letter-spacing: -1px; text-transform: uppercase; margin: 2px 0; }
-        .tagline { font-size: 10px; letter-spacing: 4px; opacity: 0.7; text-transform: uppercase; }
-
-        /* Navbar Layout */
-        .glass-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 3%; position: fixed; width: 100%; top: 0; z-index: 1000;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        /* Icon & Button Styling */
-        .nav-icon {
-            color: #fff;
-            font-size: 18px;
-            text-decoration: none;
-            transition: 0.3s;
-            opacity: 0.8;
-            display: flex;
-            align-items: center;
-        }
-        .nav-icon:hover { color: #ff3333; opacity: 1; transform: translateY(-2px); }
-
-        .nav-btn {
-            background: rgba(255,255,255,0.08);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.15);
-            padding: 7px 14px;
-            border-radius: 4px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 11px;
-            cursor: pointer;
-            transition: 0.3s;
+        .company-name { 
+            font-family: 'Syncopate', sans-serif; 
+            font-size: clamp(20px, 4vw, 45px); 
+            font-weight: 800; 
+            background: linear-gradient(to bottom, var(--ptcl-gold) 50%, #8e7037 100%); /* Gold Gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            margin: 5px 0;
         }
-        .nav-btn:hover { background: #ff3333; border-color: #ff3333; }
-
-        /* Modal (Pop-up) Styling */
-        .modal-overlay {
-            display: none; 
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
+        .tagline { 
+            font-size: 11px; 
+            letter-spacing: 5px; 
+            color: var(--ptcl-silver);
+            opacity: 0.8;
         }
 
-        .modal-content {
-            position: relative;
-            width: 95%;
-            max-width: 1100px;
-            height: 85vh;
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        /* --- Product Grid Styling (Card Borders) --- */
+        .horizontal-scroll {
+            padding: 20px;
+        }
+        /* In your script.js, ensure items have these classes */
+        .product-card {
+            border: 1px solid var(--nav-border);
+            background: #262626;
+            transition: 0.4s;
+        }
+        .product-card:hover {
+            border-color: var(--ptcl-gold);
+            box-shadow: 0 0 15px rgba(197, 160, 89, 0.2);
         }
 
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 30px;
-            color: #333;
-            cursor: pointer;
-            z-index: 2100;
-            transition: 0.3s;
-            background: rgba(255,255,255,0.9);
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-weight: bold;
+        /* --- Navigation Buttons --- */
+        .nav-btn {
+            background: transparent;
+            color: var(--ptcl-silver);
+            border: 1px solid var(--ptcl-gold);
+            padding: 8px 18px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            transition: 0.3s ease;
         }
-        .close-btn:hover { color: #ff3333; transform: rotate(90deg); }
-
-        #intFrame, #feedbackFrame {
-            width: 100%;
-            height: 100%;
-            border: none;
+        .nav-btn:hover { 
+            background: var(--ptcl-gold); 
+            color: var(--bg-dark); 
+            box-shadow: 0 0 10px var(--ptcl-gold);
         }
 
-        /* Fixed Footer Address */
+        .nav-icon:hover { color: var(--ptcl-gold); opacity: 1; transform: scale(1.1); }
+
+        /* --- Footer Update --- */
         .bottom-address-container {
-            position: fixed; bottom: 15px; left: 0; width: 100%;
-            display: flex; flex-direction: column; align-items: center; z-index: 100; pointer-events: none;
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(0,0,0,0.5); padding: 10px 0;
+            border-top: 1px solid rgba(197, 160, 89, 0.1);
         }
-        .footer-address { font-size: 10px; letter-spacing: 2px; opacity: 0.5; text-transform: uppercase; margin: 5px 0; color: #fff; text-align: center; }
-        .line-decorator { width: 30px; height: 1.5px; background: #ff3333; margin: 0 auto; }
-        
-        .slider-section { height: 55vh; display: flex; align-items: center; }
+        .footer-address { font-size: 9px; color: var(--ptcl-gold); opacity: 0.8; }
+        .line-decorator { background: var(--ptcl-red); height: 2px; } /* Using logo red for accent */
+
+        /* --- Modal Customization --- */
+        .modal-content {
+            background: var(--bg-dark);
+            border: 1px solid var(--ptcl-gold);
+        }
     </style>
 </head>
 <body>
 
     <nav class="glass-header">
-        <div class="nav-left">
-            <img src="images/PTCL logo.png" alt="Logo" class="logo-img">
+        <div class="nav-left" style="display: flex; align-items: center;">
+            <img src="images/PTCL logo.png" alt="Logo" style="height: 40px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));">
             <span class="brand-text">PTCL</span>
         </div>
 
-        <div class="nav-center">
+        <div class="nav-center" style="display: flex; gap: 10px;">
             <select id="catDropdown" onchange="filterItems()">
                 <option value="All">All Categories</option>
                 <option value="PTCL">PTCL Series</option>
                 <option value="Castings">Foundry Castings</option>
             </select>
+            <input type="text" id="searchBar" placeholder="Search products..." onkeyup="filterItems()">
         </div>
 
         <div class="nav-right">
-            <input type="text" id="searchBar" placeholder="Search..." onkeyup="filterItems()">
-            
             <a href="https://www.google.com/maps/..." target="_blank" class="nav-icon" title="Location">
                 <i class="fa-solid fa-location-dot"></i>
             </a>
@@ -155,7 +154,7 @@
         </div>
     </nav>
 
-    <!-- Modal for Introduction -->
+    <!-- Modals (Re-used existing logic) -->
     <div id="introModal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-btn" onclick="closeIntro()">&times;</span>
@@ -163,7 +162,6 @@
         </div>
     </div>
 
-    <!-- Modal for Feedback (Naya Addition) -->
     <div id="feedbackModal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-btn" onclick="closeFeedback()">&times;</span>
@@ -180,43 +178,25 @@
 
     <section class="slider-section">
         <div class="horizontal-scroll" id="productGrid">
-            <!-- Items load from script.js -->
+            <!-- Script.js se items yahan load honge -->
         </div>
     </section>
 
     <footer class="bottom-address-container">
         <p class="footer-address">ADDRESS B-480 RIICO IND. AREA, BHIWADI, RAJASTHAN-301019, INDIA</p>
-        <div class="line-decorator"></div>
-        <div class="line-decorator" style="margin-top: 3px;"></div>
+        <div class="line-decorator" style="width: 40px; margin: 5px auto 0;"></div>
+        <div class="line-decorator" style="width: 20px; margin: 3px auto 0; opacity: 0.5;"></div>
     </footer>
 
     <script>
-        // --- Introduction Modal Logic ---
-        function showIntro() {
-            document.getElementById('introModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeIntro() {
-            document.getElementById('introModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // --- Feedback Modal Logic (Updated) ---
-        function showFeedback() {
-            document.getElementById('feedbackModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeFeedback() {
-            document.getElementById('feedbackModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Modal ke bahar click karne par band ho jaye
+        // Modal logic remains same for functionality
+        function showIntro() { document.getElementById('introModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function closeIntro() { document.getElementById('introModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        function showFeedback() { document.getElementById('feedbackModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function closeFeedback() { document.getElementById('feedbackModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
         window.onclick = function(event) {
-            const introModal = document.getElementById('introModal');
-            const feedbackModal = document.getElementById('feedbackModal');
-            if (event.target == introModal) { closeIntro(); }
-            if (event.target == feedbackModal) { closeFeedback(); }
+            if (event.target == document.getElementById('introModal')) closeIntro();
+            if (event.target == document.getElementById('feedbackModal')) closeFeedback();
         }
     </script>
     <script src="script.js"></script>
