@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Briefing - PTCL</title>
+    <style>
+        :root {
+            --ptcl-yellow: #ffcc00;
+            --danger-red: #d9534f;
+            --safe-blue: #0056b3;
+            --dark-bg: #2d2d2d;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .header-main {
+            grid-column: 1 / -1;
+            background: var(--dark-bg);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            border-bottom: 3px solid var(--ptcl-yellow);
+            padding-bottom: 10px;
+            margin-top: 0;
+            color: var(--dark-bg);
+        }
+
+        .emergency-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .emergency-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 5px solid var(--safe-blue);
+        }
+
+        .aqi-box {
+            background: var(--danger-red);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .ppe-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .ppe-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .ppe-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--ptcl-yellow);
+            border-radius: 50%;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .highlight { font-weight: bold; color: var(--safe-blue); }
+
+        @media (max-width: 850px) {
+            .dashboard { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+    <div class="header-main">
+        <h1>Safety Briefing</h1>
+    </div>
+
+    <!-- Emergency & Protocols -->
+    <div class="card">
+        <h2>Emergency Protocols</h2>
+        <div class="emergency-list">
+            <div class="emergency-item">
+                <span class="highlight">Emergency Contacts:</span><br>
+                Fire: 101 | Medical: 102 | Responders: +91 9871874903
+            </div>
+            <div class="emergency-item">
+                <span class="highlight">Take Cover:</span><br>
+                Go to the nearest Main Gate Safe assembly area.
+            </div>
+            <div class="emergency-item">
+                <span class="highlight">Evacuation:</span><br>
+                Leave through the nearest exit; meet at designated assembly area | Listen for All Clear '.
+            </div>
+        </div>
+
+        <div class="aqi-box">
+            <h3>Air Quality Index (AQI) 391 </h3>
+            <p>Category: VERY POOR</p>
+            <small>Standard Protocol is Limit Outdoor Exposure | Stay Indoors and Create Clean Room | Monitor Health Symptoms |Use Protective Masks</small>
+        </div>
+
+        <h3>Room Hazards</h3>
+        <p>Beware of Electrical Hazards, Physical and Mental Health risks.</p>
+    </div>
+
+    <!-- PPE Requirements -->
+    <div class="card">
+        <h2>Personal Protective Equipment [P.P.E]</h2>
+        <p style="text-align:center; font-weight:bold; color:var(--safe-blue);">PTCL SHOP FLOOR MANDATORY GEAR</p>
+        
+        <div class="ppe-section">
+            <div class="ppe-item">
+                <div class="ppe-icon"></div>
+                <div><strong>Safety Helmet:</strong> Protect head from falling objects.</div>
+            </div>
+            <div class="ppe-item">
+                <div class="ppe-icon"></div>
+                <div><strong>Safety Glasses:</strong> Protect eyes from particles.</div>
+            </div>
+            <div class="ppe-item">
+                <div class="ppe-icon"></div>
+                <div><strong>Respiratory:</strong> Protect from inhaling dust.</div>
+            </div>
+            <div class="ppe-item">
+                <div class="ppe-icon"></div>
+                <div><strong>Safety Gloves:</strong> Protect hands from injury.</div>
+            </div>
+            <div class="ppe-item">
+                <div class="ppe-icon"></div>
+                <div><strong>Safety Shoes:</strong> Protect feet from falling/rolling.</div>
+            </div>
+            <div class="ppe-item">
+                <div class="ppe-icon"></div>
+                <div><strong>Reflective Clothing:</strong> Ensure high visibility.</div>
+            </div>
+        </div>
+
+        <div style="margin-top:20px; padding:10px; background:#fff3cd; border-radius:5px; font-size:0.9rem;">
+            <strong>Mandatory for Shop Floor:</strong> Helmet , Safety Shoes, Safety Glasses , Ear Plugs ,Safety Mask & Safety Gloves.
+        </div>
+    </div>
+</div>
+
+<footer style="text-align:center; margin-top:30px; color:#666; font-size:0.8rem;">
+    Created by PTCL - Precon Technology and Castings Ltd.
+</footer>
+
+</body>
+</html>
