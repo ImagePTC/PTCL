@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRECON TECHNOLOGY</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;400;800&display=swap" rel="stylesheet">
     <style>
@@ -60,14 +59,11 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .nav-btn:hover {
-            background: #ff3333;
-            border-color: #ff3333;
-        }
+        .nav-btn:hover { background: #ff3333; border-color: #ff3333; }
 
         /* Modal (Pop-up) Styling */
         .modal-overlay {
-            display: none; /* Hidden by default */
+            display: none; 
             position: fixed;
             top: 0;
             left: 0;
@@ -111,7 +107,7 @@
         }
         .close-btn:hover { color: #ff3333; transform: rotate(90deg); }
 
-        #intFrame {
+        #intFrame, #feedbackFrame {
             width: 100%;
             height: 100%;
             border: none;
@@ -147,10 +143,10 @@
         <div class="nav-right">
             <input type="text" id="searchBar" placeholder="Search..." onkeyup="filterItems()">
             
-            <a href="https://www.google.com/maps/place/Precon+Technology+And+Castings+Ltd/@28.2135457,76.8392663,17z/data=!3m1!4b1!4m6!3m5!1s0x390d37f147c89a67:0x16ca4d81c5ee4115!8m2!3d28.213541!4d76.8418412!16s%2Fg%2F12m91xs0j?entry=ttu&g_ep=EgoyMDI1MTExNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="nav-icon" title="Location">
+            <a href="https://www.google.com/maps/..." target="_blank" class="nav-icon" title="Location">
                 <i class="fa-solid fa-location-dot"></i>
             </a>
-            <a href="https://www.linkedin.com/in/precon-technology-and-casting-ltd-bhiwadi-22129539b/" target="_blank" class="nav-icon" title="LinkedIn">
+            <a href="https://www.linkedin.com/..." target="_blank" class="nav-icon" title="LinkedIn">
                 <i class="fa-brands fa-linkedin"></i>
             </a>
 
@@ -159,11 +155,19 @@
         </div>
     </nav>
 
-    <!-- Modal Structure for Introduction -->
+    <!-- Modal for Introduction -->
     <div id="introModal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-btn" onclick="closeIntro()">&times;</span>
             <iframe src="int.html" id="intFrame"></iframe>
+        </div>
+    </div>
+
+    <!-- Modal for Feedback (Naya Addition) -->
+    <div id="feedbackModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeFeedback()">&times;</span>
+            <iframe src="feedback.html" id="feedbackFrame"></iframe>
         </div>
     </div>
 
@@ -176,43 +180,43 @@
 
     <section class="slider-section">
         <div class="horizontal-scroll" id="productGrid">
-            <!-- Items script.js se load honge -->
+            <!-- Items load from script.js -->
         </div>
     </section>
 
     <footer class="bottom-address-container">
-        <p class="footer-address">
-            ADDRESS B-480 RIICO IND. AREA, BHIWADI, RAJASTHAN-301019, INDIA
-        </p>
+        <p class="footer-address">ADDRESS B-480 RIICO IND. AREA, BHIWADI, RAJASTHAN-301019, INDIA</p>
         <div class="line-decorator"></div>
         <div class="line-decorator" style="margin-top: 3px;"></div>
     </footer>
 
     <script>
-        // Modal kholne ka logic
+        // --- Introduction Modal Logic ---
         function showIntro() {
-            const modal = document.getElementById('introModal');
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Background scroll disable karein
+            document.getElementById('introModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeIntro() {
+            document.getElementById('introModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
 
-        // Modal band karne ka logic
-        function closeIntro() {
-            const modal = document.getElementById('introModal');
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Background scroll enable karein
+        // --- Feedback Modal Logic (Updated) ---
+        function showFeedback() {
+            document.getElementById('feedbackModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeFeedback() {
+            document.getElementById('feedbackModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
 
         // Modal ke bahar click karne par band ho jaye
         window.onclick = function(event) {
-            const modal = document.getElementById('introModal');
-            if (event.target == modal) {
-                closeIntro();
-            }
-        }
-
-        function showFeedback() {
-            alert("For feedback or business inquiries, please visit our facility at Bhiwadi or email us at info@precontechnology.com");
+            const introModal = document.getElementById('introModal');
+            const feedbackModal = document.getElementById('feedbackModal');
+            if (event.target == introModal) { closeIntro(); }
+            if (event.target == feedbackModal) { closeFeedback(); }
         }
     </script>
     <script src="script.js"></script>
