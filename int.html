@@ -8,9 +8,11 @@
         :root {
             --ptcl-yellow: #ffcc00;
             --danger-red: #d9534f;
+            --header-safety-bg: #8B0000; /* Dark Red background Safety ke liye */
+            --header-intro-bg: #000000;   /* Black background Introduction ke liye */
             --safe-blue: #0056b3;
-            --dark-bg: #2d2d2d;
             --card-bg: #ffffff;
+            --text-white: #ffffff;
         }
 
         body {
@@ -29,15 +31,42 @@
             gap: 20px;
         }
 
-        .header-main {
+        /* Common Header Style */
+        .header-container {
             grid-column: 1 / -1;
-            background: var(--dark-bg);
-            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 15px;
-            text-align: center;
             border-radius: 8px;
             text-transform: uppercase;
             letter-spacing: 2px;
+            gap: 20px;
+            color: var(--text-white); /* Default white text sabhi headers ke liye */
+        }
+
+        .header-main {
+            background: var(--header-safety-bg);
+            margin-bottom: 10px;
+        }
+
+        .header-intro {
+            background: var(--header-intro-bg);
+            margin-top: 20px;
+        }
+
+        .header-logo {
+            height: 60px; /* Logo ki height yahan se adjust karein */
+            width: auto;
+            /* Logo ko dark background par highlight karne ke liye halka shadow */
+            filter: drop-shadow(0px 0px 2px rgba(255,255,255,0.5));
+            border-radius: 4px;
+        }
+
+        .header-container h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--text-white);
         }
 
         .card {
@@ -47,11 +76,15 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
+        .full-width-card {
+            grid-column: 1 / -1;
+        }
+
         h2 {
             border-bottom: 3px solid var(--ptcl-yellow);
             padding-bottom: 10px;
             margin-top: 0;
-            color: var(--dark-bg);
+            color: #2d2d2d;
         }
 
         .emergency-list {
@@ -102,13 +135,18 @@
 
         @media (max-width: 850px) {
             .dashboard { grid-template-columns: 1fr; }
+            .header-container { flex-direction: column; text-align: center; gap: 10px;}
+            .header-logo { height: 50px; }
+            .header-container h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
 <div class="dashboard">
-    <div class="header-main">
+    <!-- Header 1: Safety Briefing - Dark Red Background, White Text -->
+    <div class="header-container header-main">
+        <img src="https://drive.google.com/thumbnail?id=1PHprB2Xz7zgnn1YgixJ89__Ok19MjN2R&sz=w500" alt="PTCL Logo" class="header-logo">
         <h1>Safety Briefing</h1>
     </div>
 
@@ -174,6 +212,26 @@
 
         <div style="margin-top:20px; padding:10px; background:#fff3cd; border-radius:5px; font-size:0.9rem;">
             <strong>Mandatory for Shop Floor:</strong> Helmet , Safety Shoes, Safety Glasses , Ear Plugs ,Safety Mask & Safety Gloves.
+        </div>
+    </div>
+</div>
+    <!-- Header 2: PTCL Introduction - Black Background, White Text -->
+    <div class="header-container header-intro">
+        <img src="https://drive.google.com/thumbnail?id=1PHprB2Xz7zgnn1YgixJ89__Ok19MjN2R&sz=w500" alt="PTCL Logo" class="header-logo">
+        <h1>PTCL Introduction</h1>
+    </div>
+
+    <!-- Introduction Content Section -->
+    <div class="card full-width-card">
+        <h2>About Precon Technology and Castings Ltd.</h2>
+        <p>PTCL is a leading name in manufacturing high-quality precision castings and engineering solutions. We focus on innovation, quality, and strict workplace safety standards.</p>
+        <div class="emergency-list">
+            <div class="emergency-item">
+                <span class="highlight">Our Vision:</span> To be the global leader in casting technology.
+            </div>
+            <div class="emergency-item">
+                <span class="highlight">Core Values:</span> Integrity, Excellence, Safety First, and Sustainability.
+            </div>
         </div>
     </div>
 </div>
