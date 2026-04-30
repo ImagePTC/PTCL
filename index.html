@@ -7,24 +7,58 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;400;800&display=swap" rel="stylesheet">
     <style>
-        /* Is CSS ko dhyan se dekhein, ye alignment fix karega */
-        .bottom-address-container {
-            position: fixed;
-            bottom: 20px;
-            left: 0;
-            width: 100%; /* Poori width taaki center nikal sake */
+        /* Alignment Fixes */
+        .main-hero {
+            /* Height kam ki taaki text upar chala jaye */
+            height: 30vh; 
+            display: flex;
+            align-items: center; /* Vertical center alignment */
+            justify-content: center;
+            margin-top: 60px; /* Navbar ke neeche se thoda gap */
+            padding-bottom: 0;
+        }
+
+        .hero-content {
             display: flex;
             flex-direction: column;
-            align-items: center; /* Horizontally center */
+            align-items: center;
+            text-align: center;
+        }
+
+        .company-name { 
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(20px, 4vw, 45px); 
+            font-weight: 800; 
+            letter-spacing: -1px; 
+            text-transform: uppercase;
+            margin: 5px 0; /* Margin kam kiya spacing ke liye */
+        }
+
+        .tagline { 
+            font-size: 11px; 
+            letter-spacing: 4px; 
+            opacity: 0.7; 
+            text-transform: uppercase;
+        }
+
+        /* Footer Address Fixed at Bottom */
+        .bottom-address-container {
+            position: fixed;
+            bottom: 25px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
             z-index: 100;
-            pointer-events: none; /* Slider ke upar click karne mein rukawat na bane */
+            pointer-events: none;
         }
 
         .footer-address {
-            font-size: 11px;
+            font-size: 10px;
             letter-spacing: 2px;
-            opacity: 0.7;
+            opacity: 0.6;
             text-transform: uppercase;
             margin: 8px 0;
             color: #fff;
@@ -32,16 +66,17 @@
         }
 
         .line-decorator {
-            width: 40px;
-            height: 2px;
+            width: 35px;
+            height: 1.5px;
             background: #ff3333;
             margin: 0 auto;
         }
 
-        /* Thodi extra space slider ke liye */
+        /* Slider section ko thoda aur upar laane ke liye */
         .slider-section {
-            height: 50vh;
-            margin-bottom: 60px; 
+            height: 45vh;
+            display: flex;
+            align-items: center;
         }
     </style>
 </head>
@@ -64,6 +99,7 @@
         </div>
     </nav>
 
+    <!-- Header Section (Now shifted up) -->
     <header class="main-hero">
         <div class="hero-content">
             <p class="tagline">ENGINEERED PRECISION</p>
@@ -77,7 +113,7 @@
         </div>
     </section>
 
-    <!-- Ye hai updated Footer jo 100% center rahega -->
+    <!-- Fixed Bottom Address -->
     <footer class="bottom-address-container">
         <p class="footer-address">
             ADDRESS B-480 RIICO IND. AREA, BHIWADI, RAJASTHAN-301019, INDIA
