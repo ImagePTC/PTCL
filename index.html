@@ -5,17 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRECON TECHNOLOGY</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome Icons ke liye link -->
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;400;800&display=swap" rel="stylesheet">
     <style>
-        /* Base styles from previous updates */
-        .main-hero { height: 20vh; display: flex; align-items: center; justify-content: center; margin-top: 80px; }
+        /* Base Layout Fixes */
+        .main-hero { 
+            height: 20vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin-top: 80px; 
+        }
         .hero-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
         .company-name { font-family: 'Syncopate', sans-serif; font-size: clamp(18px, 3.5vw, 40px); font-weight: 800; letter-spacing: -1px; text-transform: uppercase; margin: 2px 0; }
         .tagline { font-size: 10px; letter-spacing: 4px; opacity: 0.7; text-transform: uppercase; }
 
-        /* Navbar Layout Update */
+        /* Navbar Layout */
         .glass-header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 10px 3%; position: fixed; width: 100%; top: 0; z-index: 1000;
@@ -36,18 +42,20 @@
             text-decoration: none;
             transition: 0.3s;
             opacity: 0.8;
+            display: flex;
+            align-items: center;
         }
         .nav-icon:hover { color: #ff3333; opacity: 1; transform: translateY(-2px); }
 
         /* Button Styling */
         .nav-btn {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08);
             color: #fff;
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 6px 15px;
-            border-radius: 5px;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 7px 14px;
+            border-radius: 4px;
             font-family: 'Outfit', sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             transition: 0.3s;
             text-transform: uppercase;
@@ -89,11 +97,11 @@
             <!-- Search Bar -->
             <input type="text" id="searchBar" placeholder="Search..." onkeyup="filterItems()">
             
-            <!-- Social Icons -->
-            <a href="google.com/maps/place/Precon+Technology+And+Castings+Ltd/@28.2135457,76.8392663,17z/data=!3m1!4b1!4m6!3m5!1s0x390d37f147c89a67:0x16ca4d81c5ee4115!8m2!3d28.213541!4d76.8418412!16s%2Fg%2F12m91xs0j?entry=ttu&g_ep=EgoyMDI1MTExNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="nav-icon" title="Location">
+            <!-- Updated Social Icons with your URLs -->
+            <a href="https://www.google.com/maps/place/Precon+Technology+And+Castings+Ltd/@28.2135457,76.8392663,17z/data=!3m1!4b1!4m6!3m5!1s0x390d37f147c89a67:0x16ca4d81c5ee4115!8m2!3d28.213541!4d76.8418412!16s%2Fg%2F12m91xs0j?entry=ttu&g_ep=EgoyMDI1MTExNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="nav-icon" title="View on Google Maps">
                 <i class="fa-solid fa-location-dot"></i>
             </a>
-            <a href="www.linkedin.com/in/precon-technology-and-casting-ltd-bhiwadi-22129539b" target="_blank" class="nav-icon" title="LinkedIn">
+            <a href="https://www.linkedin.com/in/precon-technology-and-casting-ltd-bhiwadi-22129539b/" target="_blank" class="nav-icon" title="LinkedIn Profile">
                 <i class="fa-brands fa-linkedin"></i>
             </a>
 
@@ -125,15 +133,14 @@
     </footer>
 
     <script>
-        // Button Click Functions
         function showIntro() {
-            alert("Precon Technology and Castings Ltd. (PTCL) is a leading manufacturer of high-quality foundry castings and industrial solutions based in Bhiwadi.");
+            alert("Precon Technology and Castings Ltd. (PTCL) is a premier manufacturer specializing in industrial foundry castings and high-precision engineering solutions.");
         }
 
         function showFeedback() {
-            // Aap yahan ek modal ya naya form page open kar sakte hain
-            const email = "feedback@precontechnology.com";
-            window.location.href = `mailto:${email}?subject=Feedback regarding PTCL`;
+            // Address details ya feedback form ke liye redirect
+            const contactInfo = "For feedback or business inquiries, please visit our facility at Bhiwadi or email us.";
+            alert(contactInfo);
         }
     </script>
     <script src="script.js"></script>
