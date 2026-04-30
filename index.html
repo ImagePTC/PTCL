@@ -47,7 +47,6 @@
 
     <main class="slider-wrapper">
         <div class="nav-arrow left-arrow" onclick="moveSlider('left')"><i class="fa-solid fa-chevron-left"></i></div>
-        
         <div class="tiered-container">
             <div class="layer layer-1"></div>
             <div class="layer layer-2"></div>
@@ -57,22 +56,26 @@
                 </div>
             </div>
         </div>
-
         <div class="nav-arrow right-arrow" onclick="moveSlider('right')"><i class="fa-solid fa-chevron-right"></i></div>
     </main>
 
-    <!-- Modals -->
+    <!-- Modal for Introduction -->
     <div id="introModal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-btn" onclick="closeIntro()">&times;</span>
-            <iframe src="int.html" id="intFrame"></iframe>
+            <div class="iframe-container">
+                <iframe src="int.html" id="intFrame"></iframe>
+            </div>
         </div>
     </div>
 
+    <!-- Modal for Feedback -->
     <div id="feedbackModal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-btn" onclick="closeFeedback()">&times;</span>
-            <iframe src="feedback.html" id="feedbackFrame"></iframe>
+            <div class="iframe-container">
+                <iframe src="feedback.html" id="feedbackFrame"></iframe>
+            </div>
         </div>
     </div>
 
@@ -102,6 +105,14 @@
         function closeFeedback() { 
             document.getElementById('feedbackModal').style.display = 'none'; 
             document.body.style.overflow = 'auto';
+        }
+
+        // Close on outside click
+        window.onclick = function(event) {
+            if (event.target.className === 'modal-overlay') {
+                closeIntro();
+                closeFeedback();
+            }
         }
     </script>
 </body>
