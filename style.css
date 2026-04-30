@@ -49,7 +49,8 @@ body {
 }
 .btn-outline { background: transparent; border: 1px solid #555; color: white; }
 .btn-solid { background: #333; color: white; }
-.red-btn { background: var(--primary-red); }
+.green-solid { background: #006400; color: white; }
+.yellow-btn { { background: #8B8000; color: white; }
 
 /* Hero */
 .main-hero { margin-top: 90px; text-align: center; }
