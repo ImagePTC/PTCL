@@ -29,7 +29,7 @@ const inventory = [
 ];
 
 const productGrid = document.getElementById("productGrid");
-const scrollContainer = document.querySelector(".horizontal-scroll"); // Corrected selector
+const slider = document.querySelector(".slider-section");
 let autoScrollInterval;
 let isPaused = false;
 
@@ -39,7 +39,7 @@ function renderGallery(items) {
         <div class="p-card">
             <div class="img-container">
                 <img src="${item.image}" alt="${item.name}" 
-                     onerror="this.src='https://via.placeholder.com/300x200/ffffff/000000?text=Path+Error'">
+                     onerror="this.src='https://via.placeholder.com/300x200/222/fff?text=Check+Image+Path'">
             </div>
             <h3>${item.name}</h3>
         </div>
@@ -47,33 +47,33 @@ function renderGallery(items) {
 }
 
 function startAutoScroll() {
+    // Purana interval clear karein agar koi chal raha ho
     clearInterval(autoScrollInterval);
+    
     autoScrollInterval = setInterval(() => {
-        if (!isPaused && scrollContainer) {
-            scrollContainer.scrollLeft += 1; 
+        if (!isPaused) {
+            slider.scrollLeft += 1; // Smooth speed
             
-            if (scrollContainer.scrollLeft >= (scrollContainer.scrollWidth - scrollContainer.clientWidth)) {
-                scrollContainer.scrollLeft = 0;
+            // Loop Back: Agar end tak pahuche toh shuru se start karein
+            if (slider.scrollLeft >= (slider.scrollWidth - slider.clientWidth)) {
+                slider.scrollLeft = 0;
             }
         }
-    }, 30); 
+    }, 20); 
 }
-
-// Arrow Controls for image_0be67e.png style
-document.querySelector(".left-arrow")?.addEventListener("click", () => {
-    scrollContainer.scrollLeft -= 300;
-});
-
-document.querySelector(".right-arrow")?.addEventListener("click", () => {
-    scrollContainer.scrollLeft += 300;
-});
 
 // Interaction Controls
-if(scrollContainer) {
-    scrollContainer.addEventListener("mouseenter", () => { isPaused = true; });
-    scrollContainer.addEventListener("mouseleave", () => { isPaused = false; });
-    scrollContainer.addEventListener("touchstart", () => { isPaused = true; });
-}
+slider.addEventListener("wheel", (e) => {
+    isPaused = true;
+    slider.scrollLeft += e.deltaY;
+    
+    clearTimeout(window.scrollTimeout);
+    window.scrollTimeout = setTimeout(() => { isPaused = false; }, 3000);
+});
+
+slider.addEventListener("mouseenter", () => { isPaused = true; });
+slider.addEventListener("mouseleave", () => { isPaused = false; });
+slider.addEventListener("touchstart", () => { isPaused = true; });
 
 window.onload = () => {
     renderGallery(inventory);
@@ -82,14 +82,8 @@ window.onload = () => {
 
 function filterItems() {
     const s = document.getElementById("searchBar").value.toLowerCase();
-    const c = document.getElementById("catDropdown").value;
-    
-    const filtered = inventory.filter(p => {
-        const matchesSearch = p.name.toLowerCase().includes(s);
-        const matchesCat = (c === "All" || p.category === c);
-        return matchesSearch && matchesCat;
-    });
-    
+    const filtered = inventory.filter(p => p.name.toLowerCase().includes(s));
     renderGallery(filtered);
-    if(scrollContainer) scrollContainer.scrollLeft = 0;
+    // Reset scroll position after filter
+    slider.scrollLeft = 0;
 }
