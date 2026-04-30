@@ -7,15 +7,18 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;400;800&display=swap" rel="stylesheet">
     <style>
-        /* Address ko hamesha bottom center mein rakhne ke liye extra CSS */
+        /* Is CSS ko dhyan se dekhein, ye alignment fix karega */
         .bottom-address-container {
             position: fixed;
-            bottom: 20px; /* Neeche se gap */
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            width: 100%;
+            bottom: 20px;
+            left: 0;
+            width: 100%; /* Poori width taaki center nikal sake */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Horizontally center */
+            justify-content: center;
             z-index: 100;
+            pointer-events: none; /* Slider ke upar click karne mein rukawat na bane */
         }
 
         .footer-address {
@@ -23,24 +26,22 @@
             letter-spacing: 2px;
             opacity: 0.7;
             text-transform: uppercase;
-            margin: 5px 0;
+            margin: 8px 0;
             color: #fff;
+            text-align: center;
         }
 
         .line-decorator {
             width: 40px;
             height: 2px;
-            background: #ff3333; /* Aapka accent color */
+            background: #ff3333;
             margin: 0 auto;
         }
-        
-        /* Hero section thoda upar shift kiya taaki slider ko jagah mile */
-        .main-hero {
-            height: 40vh;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding-bottom: 30px;
+
+        /* Thodi extra space slider ke liye */
+        .slider-section {
+            height: 50vh;
+            margin-bottom: 60px; 
         }
     </style>
 </head>
@@ -72,17 +73,17 @@
 
     <section class="slider-section">
         <div class="horizontal-scroll" id="productGrid">
-            <!-- Products script.js se yahan load honge -->
+            <!-- Items script.js se load honge -->
         </div>
     </section>
 
-    <!-- Updated Address Section: Hamesha screen ke bottom mein rahega -->
+    <!-- Ye hai updated Footer jo 100% center rahega -->
     <footer class="bottom-address-container">
-        <div class="line-decorator"></div>
         <p class="footer-address">
-            Address B-480 RIICO Ind. Area, Bhiwadi, Rajasthan-301019, India
+            ADDRESS B-480 RIICO IND. AREA, BHIWADI, RAJASTHAN-301019, INDIA
         </p>
         <div class="line-decorator"></div>
+        <div class="line-decorator" style="margin-top: 4px;"></div>
     </footer>
 
     <script src="script.js"></script>
