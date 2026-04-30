@@ -29,8 +29,6 @@ const inventory = [
 ];
 
 const productGrid = document.getElementById("productGrid");
-const slider = document.querySelector(".slider-section");
-let autoScrollInterval;
 let isPaused = false;
 
 function renderGallery(items) {
@@ -39,41 +37,36 @@ function renderGallery(items) {
         <div class="p-card">
             <div class="img-container">
                 <img src="${item.image}" alt="${item.name}" 
-                     onerror="this.src='https://via.placeholder.com/300x200/222/fff?text=Check+Image+Path'">
+                     onerror="this.src='https://via.placeholder.com/200x150/ffffff/000000?text=Path+Error'">
             </div>
             <h3>${item.name}</h3>
         </div>
     `).join('');
 }
 
-function startAutoScroll() {
-    // Purana interval clear karein agar koi chal raha ho
-    clearInterval(autoScrollInterval);
-    
-    autoScrollInterval = setInterval(() => {
-        if (!isPaused) {
-            slider.scrollLeft += 1; // Smooth speed
-            
-            // Loop Back: Agar end tak pahuche toh shuru se start karein
-            if (slider.scrollLeft >= (slider.scrollWidth - slider.clientWidth)) {
-                slider.scrollLeft = 0;
-            }
-        }
-    }, 20); 
+// Slider Movement Logic
+function moveSlider(direction) {
+    const scrollAmount = 300;
+    if (direction === 'left') {
+        productGrid.scrollLeft -= scrollAmount;
+    } else {
+        productGrid.scrollLeft += scrollAmount;
+    }
 }
 
-// Interaction Controls
-slider.addEventListener("wheel", (e) => {
-    isPaused = true;
-    slider.scrollLeft += e.deltaY;
-    
-    clearTimeout(window.scrollTimeout);
-    window.scrollTimeout = setTimeout(() => { isPaused = false; }, 3000);
-});
+function startAutoScroll() {
+    setInterval(() => {
+        if (!isPaused) {
+            productGrid.scrollLeft += 1;
+            if (productGrid.scrollLeft >= (productGrid.scrollWidth - productGrid.clientWidth)) {
+                productGrid.scrollLeft = 0;
+            }
+        }
+    }, 30);
+}
 
-slider.addEventListener("mouseenter", () => { isPaused = true; });
-slider.addEventListener("mouseleave", () => { isPaused = false; });
-slider.addEventListener("touchstart", () => { isPaused = true; });
+productGrid.addEventListener("mouseenter", () => isPaused = true);
+productGrid.addEventListener("mouseleave", () => isPaused = false);
 
 window.onload = () => {
     renderGallery(inventory);
@@ -84,6 +77,5 @@ function filterItems() {
     const s = document.getElementById("searchBar").value.toLowerCase();
     const filtered = inventory.filter(p => p.name.toLowerCase().includes(s));
     renderGallery(filtered);
-    // Reset scroll position after filter
-    slider.scrollLeft = 0;
+    productGrid.scrollLeft = 0;
 }
