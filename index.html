@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRECON TECHNOLOGY - PTCL</title>
+    <title>PRECON TECHNOLOGY AND CASTINGS LTD.</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;400;800&display=swap" rel="stylesheet">
@@ -21,7 +21,6 @@
                 <select id="catDropdown" onchange="filterItems()">
                     <option value="All">All Categories</option>
                     <option value="PTCL">PTCL Series</option>
-                    <option value="Castings">Foundry Castings</option>
                 </select>
                 <div class="search-box">
                     <input type="text" id="searchBar" placeholder="Search..." onkeyup="filterItems()">
@@ -39,7 +38,7 @@
         </div>
     </nav>
 
-    <!-- Modals (Intro & Feedback) -->
+    <!-- Modals -->
     <div id="introModal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-btn" onclick="closeIntro()">&times;</span>
@@ -60,30 +59,20 @@
         </div>
     </header>
 
-    <main class="content-wrapper">
-        <section class="slider-container">
-            <div class="nav-arrow left-arrow"><i class="fa-solid fa-chevron-left"></i></div>
-            
-            <!-- Layered Slider Background -->
-            <div class="slider-layers">
-                <div class="layer layer-1"></div>
-                <div class="layer layer-2"></div>
-                <div class="layer layer-3">
-                    <div class="horizontal-scroll" id="productGrid">
-                        <!-- Product Cards will load here from script.js -->
-                        <!-- Example Structure below -->
-                        <div class="p-card">
-                            <div class="img-container">
-                                <img src="images/support.jpg" alt="Support">
-                            </div>
-                            <h3>SUPPORT 2432461/62</h3>
-                        </div>
-                    </div>
+    <main class="slider-wrapper">
+        <div class="nav-arrow left-arrow" onclick="moveSlider('left')"><i class="fa-solid fa-chevron-left"></i></div>
+        
+        <div class="tiered-container">
+            <div class="layer layer-1"></div>
+            <div class="layer layer-2"></div>
+            <div class="layer layer-3">
+                <div class="horizontal-scroll" id="productGrid">
+                    <!-- Cards will load from JS -->
                 </div>
             </div>
+        </div>
 
-            <div class="nav-arrow right-arrow"><i class="fa-solid fa-chevron-right"></i></div>
-        </section>
+        <div class="nav-arrow right-arrow" onclick="moveSlider('right')"><i class="fa-solid fa-chevron-right"></i></div>
     </main>
 
     <footer class="bottom-address-container">
@@ -95,15 +84,12 @@
         </div>
     </footer>
 
-    <script>
-        function showIntro() { document.getElementById('introModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function closeIntro() { document.getElementById('introModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
-        function showFeedback() { document.getElementById('feedbackModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function closeFeedback() { document.getElementById('feedbackModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
-        window.onclick = function(event) {
-            if (event.target.className === 'modal-overlay') { closeIntro(); closeFeedback(); }
-        }
-    </script>
     <script src="script.js"></script>
+    <script>
+        function showIntro() { document.getElementById('introModal').style.display = 'flex'; }
+        function closeIntro() { document.getElementById('introModal').style.display = 'none'; }
+        function showFeedback() { document.getElementById('feedbackModal').style.display = 'flex'; }
+        function closeFeedback() { document.getElementById('feedbackModal').style.display = 'none'; }
+    </script>
 </body>
 </html>
