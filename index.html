@@ -6,6 +6,43 @@
     <title>PRECON TECHNOLOGY</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;400;800&display=swap" rel="stylesheet">
+    <style>
+        /* Address ko hamesha bottom center mein rakhne ke liye extra CSS */
+        .bottom-address-container {
+            position: fixed;
+            bottom: 20px; /* Neeche se gap */
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .footer-address {
+            font-size: 11px;
+            letter-spacing: 2px;
+            opacity: 0.7;
+            text-transform: uppercase;
+            margin: 5px 0;
+            color: #fff;
+        }
+
+        .line-decorator {
+            width: 40px;
+            height: 2px;
+            background: #ff3333; /* Aapka accent color */
+            margin: 0 auto;
+        }
+        
+        /* Hero section thoda upar shift kiya taaki slider ko jagah mile */
+        .main-hero {
+            height: 40vh;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 30px;
+        }
+    </style>
 </head>
 <body>
 
@@ -30,19 +67,23 @@
         <div class="hero-content">
             <p class="tagline">ENGINEERED PRECISION</p>
             <h1 class="company-name">PRECON TECHNOLOGY AND CASTINGS LTD.</h1>
-            
-            <div class="line-decorator"></div>
-            <p class="footer-address">
-                Address B-480 RIICO Ind. Area, Bhiwadi, Rajasthan-301019, India
-            </p>
-            <div class="line-decorator"></div>
         </div>
     </header>
 
     <section class="slider-section">
         <div class="horizontal-scroll" id="productGrid">
-            </div>
+            <!-- Products script.js se yahan load honge -->
+        </div>
     </section>
+
+    <!-- Updated Address Section: Hamesha screen ke bottom mein rahega -->
+    <footer class="bottom-address-container">
+        <div class="line-decorator"></div>
+        <p class="footer-address">
+            Address B-480 RIICO Ind. Area, Bhiwadi, Rajasthan-301019, India
+        </p>
+        <div class="line-decorator"></div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
