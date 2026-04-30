@@ -44,28 +44,42 @@ function renderGallery(items) {
     `).join('');
 }
 
-// 1. MANUAL BUTTON SPEED: Scroll amount badha diya gaya hai (300 -> 500)
+// 1. MANUAL BUTTON SPEED (Instant Movement)
 function moveSlider(direction) {
-    const scrollAmount = 500; // Ek click par ab zyada door jayega
+    const step = 600; 
     if (direction === 'left') {
-        productGrid.scrollLeft -= scrollAmount;
+        productGrid.scrollLeft -= step;
     } else {
-        productGrid.scrollLeft += scrollAmount;
+        productGrid.scrollLeft += step;
     }
 }
 
-// 2. AUTO-SCROLL SPEED: Interval aur pixels per frame dono change kiye hain
+// 2. MOUSE WHEEL SCROLL (Horizontal)
+productGrid.addEventListener("wheel", (evt) => {
+    evt.preventDefault();
+    // Normal vertical scroll ko horizontal mein convert karna
+    productGrid.scrollLeft += evt.deltaY * 3; // Speed multiplier '3'
+}, { passive: false });
+
+// 3. KEYBOARD ARROWS SUPPORT
+window.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") {
+        moveSlider('right');
+    } else if (e.key === "ArrowLeft") {
+        moveSlider('left');
+    }
+});
+
+// 4. TURBO AUTO SCROLL
 function startAutoScroll() {
     setInterval(() => {
         if (!isPaused) {
-            // Speed badhane ke liye '2' ya '3' pixels karein
-            productGrid.scrollLeft += 2; 
-            
+            productGrid.scrollLeft += 4; 
             if (productGrid.scrollLeft >= (productGrid.scrollWidth - productGrid.clientWidth)) {
                 productGrid.scrollLeft = 0;
             }
         }
-    }, 20); // Interval kam karne se animation fast aur smooth dikhegi
+    }, 16); 
 }
 
 productGrid.addEventListener("mouseenter", () => isPaused = true);
