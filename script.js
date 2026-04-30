@@ -44,9 +44,9 @@ function renderGallery(items) {
     `).join('');
 }
 
-// Slider Movement Logic
+// 1. MANUAL BUTTON SPEED: Scroll amount badha diya gaya hai (300 -> 500)
 function moveSlider(direction) {
-    const scrollAmount = 300;
+    const scrollAmount = 500; // Ek click par ab zyada door jayega
     if (direction === 'left') {
         productGrid.scrollLeft -= scrollAmount;
     } else {
@@ -54,15 +54,18 @@ function moveSlider(direction) {
     }
 }
 
+// 2. AUTO-SCROLL SPEED: Interval aur pixels per frame dono change kiye hain
 function startAutoScroll() {
     setInterval(() => {
         if (!isPaused) {
-            productGrid.scrollLeft += 1;
+            // Speed badhane ke liye '2' ya '3' pixels karein
+            productGrid.scrollLeft += 2; 
+            
             if (productGrid.scrollLeft >= (productGrid.scrollWidth - productGrid.clientWidth)) {
                 productGrid.scrollLeft = 0;
             }
         }
-    }, 30);
+    }, 20); // Interval kam karne se animation fast aur smooth dikhegi
 }
 
 productGrid.addEventListener("mouseenter", () => isPaused = true);
