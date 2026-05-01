@@ -44,7 +44,6 @@ body {
 
 .logo-img { height: 35px; }
 
-/* Icons Fix: White Color */
 .nav-icon {
     color: #ffffff !important;
     font-size: 18px;
@@ -100,7 +99,6 @@ body {
 
 .btn-outline { background: transparent; border: 1px solid #555; color: white; }
 .btn-solid { background: #333; color: white; }
-.red-btn { background: var(--primary-red); }
 
 /* Hero */
 .main-hero { margin-top: 90px; text-align: center; }
@@ -156,7 +154,6 @@ body {
     overflow: hidden;
 }
 
-/* SPEED UPDATE: scroll-behavior auto karne se keyboard aur mouse scroll instant respond karte hain */
 .horizontal-scroll {
     display: flex; 
     gap: 20px; 
@@ -169,91 +166,33 @@ body {
 
 .horizontal-scroll::-webkit-scrollbar { display: none; }
 
-.p-card { 
-    min-width: 250px; 
-    background: #222; 
-    border-radius: 15px; 
-    padding: 15px; 
-    text-align: center; 
-    transition: transform 0.2s ease;
-}
-
-.p-card:hover { transform: scale(1.02); }
-
-.img-container { 
-    background: #fff; 
-    border-radius: 10px; 
-    height: 180px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    overflow: hidden; 
-}
-
-.img-container img { 
-    max-width: 90%; 
-    max-height: 90%; 
-    object-fit: contain; 
-}
-
-.p-card h3 { 
-    margin-top: 15px; 
-    font-size: 11px; 
-    color: #ccc; 
-    letter-spacing: 1px; 
-    text-transform: uppercase;
-}
-
-/* Arrows */
-.nav-arrow {
-    width: 40px; 
-    height: 40px; 
-    background: var(--bright-red);
-    color: white; 
-    border-radius: 50%; 
-    display: flex;
-    align-items: center; 
-    justify-content: center; 
-    cursor: pointer;
-    z-index: 100; 
-    position: absolute; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: background 0.2s;
-}
-
-.nav-arrow:hover { background: #ff0000; }
-.left-arrow { left: -15px; }
-.right-arrow { right: -15px; }
-
-/* Modal Overlay */
+/* Modal Styles - UPDATED FOR FULL SCREEN */
 .modal-overlay {
     display: none; 
     position: fixed; 
     top: 0; 
     left: 0; 
-    width: 100%; 
-    height: 100%;
-    background: rgba(0,0,0,0.92); 
+    width: 100vw; 
+    height: 100vh;
+    background: #000; 
     z-index: 2000; 
     align-items: center; 
     justify-content: center;
-    backdrop-filter: blur(5px);
 }
 
 .modal-content { 
-    width: 95vw; 
-    height: 90vh; 
-    background: white; 
+    width: 100vw; 
+    height: 100vh; 
+    background: #1a1a1a; 
     position: relative; 
-    border-radius: 15px; 
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    border: none;
+    border-radius: 0;
 }
 
-.iframe-container { flex: 1; width: 100%; height: 100%; }
-
-#intFrame, #feedbackFrame { 
+#modalFrame { 
     width: 100%; 
     height: 100%; 
     border: none; 
@@ -262,16 +201,22 @@ body {
 
 .close-btn { 
     position: absolute; 
-    top: 10px; 
-    right: 20px; 
-    color: #333; 
-    font-size: 40px; 
+    top: 15px; 
+    right: 25px; 
+    color: #ffffff; /* सफ़ेद रंग ताकि साफ़ दिखे */
+    font-size: 50px; 
     cursor: pointer; 
     z-index: 2100; 
     font-weight: bold;
+    line-height: 1;
+    text-shadow: 0 0 10px rgba(0,0,0,0.8);
+    transition: 0.3s;
 }
 
-.close-btn:hover { color: var(--bright-red); }
+.close-btn:hover { 
+    color: var(--bright-red); 
+    transform: scale(1.1);
+}
 
 /* Footer */
 .bottom-address-container {
