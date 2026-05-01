@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precon Technology - 3D Digital Catalogue</title>
+    <style>
+        :root {
+            --book-height: 650px;
+            --book-width: 450px;
+            --cover-color: #2c3e50;
+            --accent-color: #e67e22;
+        }
+
+        body {
+            background-color: #111;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            perspective: 2000px;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            overflow-x: hidden;
+        }
+
+        #loading { color: white; font-size: 20px; position: fixed; }
+
+        .book-wrapper {
+            position: relative;
+            width: var(--book-width);
+            height: var(--book-height);
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            display: none;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+        }
+
+        .book-wrapper.open { transform: translateX(50%); }
+
+        .paper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            transform-origin: left;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+        }
+
+        .front, .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            backface-visibility: hidden;
+            background-color: white;
+            padding: 40px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            color: #333;
+        }
+
+        .back { transform: rotateY(180deg); background-color: #f9f9f9; }
+        .flipped { transform: rotateY(-180deg); }
+
+        .cover {
+            background-color: var(--cover-color) !important;
+            color: var(--accent-color) !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-left: 12px solid #1a252f;
+            text-align: center;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: #eee;
+            border: 1px solid #ddd;
+        }
+
+        .controls { margin-top: 50px; display: flex; gap: 30px; }
+        
+        button {
+            padding: 15px 40px;
+            background-color: var(--accent-color);
+            border: none;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        button:hover { background-color: #d35400; transform: scale(1.05); }
+        button:disabled { background-color: #444; opacity: 0.5; cursor: not-allowed; }
+
+        h2 { margin: 10px 0; color: #2c3e50; border-bottom: 2px solid var(--accent-color); display: inline-block; }
+        p { line-height: 1.6; color: #555; }
+    </style>
+</head>
+<body>
+
+    <div id="loading">Connecting to Precon Database...</div>
+
+    <audio id="flipSound" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="book-wrapper" id="book">
+        <!-- Pages will be injected here -->
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" disabled>PREVIOUS</button>
+        <button id="nextBtn">NEXT PAGE</button>
+    </div>
+
+    <script>
+        const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSGJDt0TWvLB2xdJoutjaNGdLeAjhVrkyDmuNJ7U86vAKnAqYEPQc7W2K1yTi7XgOyR7jEnug0fpxH3/pub?gid=445615970&single=true&output=csv';
+        
+        const book = document.querySelector("#book");
+        const loading = document.querySelector("#loading");
+        const sound = document.querySelector("#flipSound");
+        const prevBtn = document.querySelector("#prevBtn");
+        const nextBtn = document.querySelector("#nextBtn");
+
+        let currentLocation = 1;
+        let papers = [];
+
+        async function init() {
+            try {
+                const response = await fetch(sheetURL, { cache: 'no-store' });
+                const csvData = await response.text();
+                const rows = parseCSV(csvData);
+                
+                const products = rows.slice(1); // Header row skip karein
+                createBook(products);
+                
+                loading.style.display = 'none';
+                book.style.display = 'block';
+            } catch (error) {
+                loading.innerText = "Error: Please upload to GitHub/Netlify to view.";
+                console.error(error);
+            }
+        }
+
+        function parseCSV(str) {
+            const arr = []; let quote = false;
+            for (let row = col = c = 0; c < str.length; c++) {
+                let cc = str[c], nc = str[c+1];
+                arr[row] = arr[row] || []; arr[row][col] = arr[row][col] || '';
+                if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+                if (cc == '"') { quote = !quote; continue; }
+                if (cc == ',' && !quote) { ++col; continue; }
+                if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+                arr[row][col] += cc;
+            }
+            return arr;
+        }
+
+        function createBook(data) {
+            // 1. FRONT COVER
+            addPaper("PRECON TECHNOLOGY", "INDUSTRIAL CATALOGUE 2026", "https://via.placeholder.com/450x650/2c3e50/e67e22?text=PRECON+FOUNDRY", true);
+
+            // 2. DYNAMIC PAGES (2 rows = 1 paper)
+            for (let i = 0; i < data.length; i += 2) {
+                const p1 = data[i];
+                const p2 = data[i+1] || ["", "End of List", ""];
+                addPaper(p1[0], p1[1], p1[2], false, p2[0], p2[1], p2[2]);
+            }
+
+            // 3. BACK COVER
+            addPaper("CONTACT US", "Bhiwadi, Rajasthan", "", false, "THANK YOU", "Precon Technology & Castings Ltd", "", true);
+            
+            papers = document.querySelectorAll(".paper");
+            resetZIndex();
+        }
+
+        function addPaper(t1, d1, i1, isFC, t2, d2, i2, isBC) {
+            const paper = document.createElement("div");
+            paper.classList.add("paper");
+            paper.innerHTML = `
+                <div class="front ${isFC ? 'cover' : ''}">
+                    ${i1 ? `<img src="${i1}" class="product-img" onerror="this.src='https://via.placeholder.com/400x300?text=Industrial+Image'">` : ''}
+                    <h2>${t1}</h2><p>${d1}</p>
+                </div>
+                <div class="back ${isBC ? 'cover' : ''}">
+                    ${i2 ? `<img src="${i2}" class="product-img" onerror="this.src='https://via.placeholder.com/400x300?text=Industrial+Image'">` : ''}
+                    <h2>${t2}</h2><p>${d2}</p>
+                </div>`;
+            book.appendChild(paper);
+        }
+
+        function resetZIndex() {
+            papers.forEach((p, i) => p.style.zIndex = papers.length - i);
+        }
+
+        function playFlip() {
+            sound.currentTime = 0;
+            sound.play().catch(() => {});
+        }
+
+        nextBtn.addEventListener("click", () => {
+            if(currentLocation <= papers.length) {
+                playFlip();
+                if(currentLocation === 1) book.classList.add("open");
+                const p = papers[currentLocation - 1];
+                p.classList.add("flipped");
+                p.style.zIndex = currentLocation;
+                currentLocation++;
+                updateBtns();
+            }
+        });
+
+        prevBtn.addEventListener("click", () => {
+            if(currentLocation > 1) {
+                playFlip();
+                if(currentLocation === 2) book.classList.remove("open");
+                const p = papers[currentLocation - 2];
+                p.classList.remove("flipped");
+                resetZIndex();
+                currentLocation--;
+                updateBtns();
+            }
+        });
+
+        function updateBtns() {
+            prevBtn.disabled = currentLocation === 1;
+            nextBtn.disabled = currentLocation > papers.length;
+        }
+
+        init();
+    </script>
+</body>
+</html>
