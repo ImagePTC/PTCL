@@ -63,6 +63,12 @@
         .no-scroll {
             overflow: hidden;
         }
+
+        /* Catalogue button styling to match other buttons */
+        .nav-link-btn {
+            text-decoration: none;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -87,18 +93,22 @@
         </div>
 
         <div class="nav-right">
-            <!-- Updated Links with Target Blank -->
             <a href="https://www.google.com/maps/place/Precon+Technology+And+Castings+Ltd/@28.2135457,76.8392663,17z/data=!3m1!4b1!4m6!3m5!1s0x390d37f147c89a67:0x16ca4d81c5ee4115!8m2!3d28.213541!4d76.8418412!16s%2Fg%2F12m91xs0j?entry=ttu&g_ep=EgoyMDI1MTExNy4wIKXMDSoASAFQAw%3D%3D" 
                target="_blank" class="nav-icon"><i class="fa-solid fa-location-dot"></i></a>
             
             <a href="https://www.linkedin.com/in/precon-technology-and-casting-ltd-bhiwadi-22129539b/" 
                target="_blank" class="nav-icon"><i class="fa-brands fa-linkedin"></i></a>
             
-            <!-- Modal Trigger Buttons -->
+            <!-- Buttons -->
             <button class="nav-btn btn-outline" onclick="openFormModal('int.html')">Introduction</button>
-<button class="nav-btn btn-solid" onclick="openFormModal('https://script.google.com/macros/s/AKfycbyuoSTvJhZa7cavIzcl0tpujI-K-X8aqzEU1toOjRcOkK8rr9SufJGhm-LXySq8HyJL/exec')">Catalogue</button>
-            <button class="nav-btn btn-solid" onclick="openFormModal('feedback.html')">Feedback</button>
 
+            <!-- Catalogue: Changed to <a> tag with target="_blank" -->
+            <a href="https://script.google.com/macros/s/AKfycbyuoSTvJhZa7cavIzcl0tpujI-K-X8aqzEU1toOjRcOkK8rr9SufJGhm-LXySq8HyJL/exec" 
+               target="_blank" class="nav-link-btn">
+                <button class="nav-btn btn-solid">Catalogue</button>
+            </a>
+
+            <button class="nav-btn btn-solid" onclick="openFormModal('feedback.html')">Feedback</button>
         </div>
     </nav>
 
@@ -142,7 +152,7 @@
 
     <script src="script.js"></script>
     <script>
-        // Modal Logic
+        // Modal Logic (For Intro and Feedback)
         function openFormModal(url) {
             const modal = document.getElementById('formModal');
             const frame = document.getElementById('modalFrame');
@@ -155,11 +165,10 @@
             const modal = document.getElementById('formModal');
             const frame = document.getElementById('modalFrame');
             modal.style.display = 'none';
-            frame.src = ""; // Stop loading the page in background
+            frame.src = ""; 
             document.body.classList.remove('no-scroll');
         }
 
-        // Close when clicking outside the box
         window.onclick = function(event) {
             const modal = document.getElementById('formModal');
             if (event.target == modal) {
