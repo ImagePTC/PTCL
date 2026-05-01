@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Precon Technology - 3D Digital Catalogue</title>
+    <title>Precon Technology - Compact Catalogue</title>
     <style>
         :root {
-            --book-height: 550px;
-            --book-width: 450px;
+            /* Height kam kar di gayi hai */
+            --book-height: 500px; 
+            --book-width: 400px;
             --cover-color: #2c3e50;
             --accent-color: #e67e22;
         }
@@ -16,16 +17,22 @@
             background-color: #111;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            padding-top: 20px; /* Top se space */
             perspective: 2000px;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             overflow-x: hidden;
         }
 
-        #loading { color: white; font-size: 20px; position: fixed; }
+        /* Buttons ko top par lane ke liye */
+        .controls { 
+            margin-bottom: 30px; 
+            display: flex; 
+            gap: 20px; 
+            z-index: 1000;
+        }
 
         .book-wrapper {
             position: relative;
@@ -34,7 +41,7 @@
             transform-style: preserve-3d;
             transition: transform 1s;
             display: none;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
 
         .book-wrapper.open { transform: translateX(50%); }
@@ -56,10 +63,11 @@
             top: 0; left: 0;
             backface-visibility: hidden;
             background-color: white;
-            padding: 40px;
+            padding: 25px;
             box-sizing: border-box;
             border: 1px solid #ddd;
             color: #333;
+            overflow: hidden;
         }
 
         .back { transform: rotateY(180deg); background-color: #f9f9f9; }
@@ -72,58 +80,53 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border-left: 12px solid #1a252f;
             text-align: center;
+            border-left: 10px solid #1a252f;
         }
 
         .product-img {
             width: 100%;
-            height: 320px;
+            height: 220px; /* Height ke hisaab se image choti ki hai */
             object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            border-radius: 5px;
+            margin-bottom: 15px;
             background: #eee;
-            border: 1px solid #ddd;
         }
 
-        .controls { margin-top: 50px; display: flex; gap: 30px; }
-        
         button {
-            padding: 15px 40px;
+            padding: 12px 30px;
             background-color: var(--accent-color);
             border: none;
             color: white;
             font-weight: bold;
-            font-size: 16px;
             cursor: pointer;
-            border-radius: 30px;
+            border-radius: 25px;
             transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        button:hover { background-color: #d35400; transform: scale(1.05); }
+        button:hover { background-color: #d35400; }
         button:disabled { background-color: #444; opacity: 0.5; cursor: not-allowed; }
 
-        h2 { margin: 10px 0; color: #2c3e50; border-bottom: 2px solid var(--accent-color); display: inline-block; }
-        p { line-height: 1.6; color: #555; }
+        h2 { font-size: 1.2rem; margin: 5px 0; color: #2c3e50; }
+        p { font-size: 0.95rem; line-height: 1.4; color: #555; margin: 5px 0; }
+        #loading { color: white; margin-top: 100px; }
     </style>
 </head>
 <body>
 
-    <div id="loading">Connecting to Precon Database...</div>
+    <div id="loading">Loading Precon Catalogue...</div>
+
+    <!-- Top Buttons -->
+    <div class="controls">
+        <button id="prevBtn" disabled>PREVIOUS</button>
+        <button id="nextBtn">NEXT PAGE</button>
+    </div>
 
     <audio id="flipSound" preload="auto">
         <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="book-wrapper" id="book">
-        <!-- Pages will be injected here -->
-    </div>
-
-    <div class="controls">
-        <button id="prevBtn" disabled>PREVIOUS</button>
-        <button id="nextBtn">NEXT PAGE</button>
-    </div>
+    <div class="book-wrapper" id="book"></div>
 
     <script>
         const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSGJDt0TWvLB2xdJoutjaNGdLeAjhVrkyDmuNJ7U86vAKnAqYEPQc7W2K1yTi7XgOyR7jEnug0fpxH3/pub?gid=445615970&single=true&output=csv';
@@ -141,46 +144,35 @@
             try {
                 const response = await fetch(sheetURL, { cache: 'no-store' });
                 const csvData = await response.text();
-                const rows = parseCSV(csvData);
                 
-                const products = rows.slice(1); // Header row skip karein
+                // Rows parsing with basic CSV logic
+                const rows = csvData.split('\n').map(row => {
+                    return row.split(',').map(cell => cell.replace(/"/g, "").trim());
+                });
+                
+                const products = rows.filter(r => r.length >= 2).slice(1); 
                 createBook(products);
                 
                 loading.style.display = 'none';
                 book.style.display = 'block';
             } catch (error) {
-                loading.innerText = "Error: Please upload to GitHub/Netlify to view.";
-                console.error(error);
+                loading.innerText = "Check your internet or Google Sheet settings.";
             }
-        }
-
-        function parseCSV(str) {
-            const arr = []; let quote = false;
-            for (let row = col = c = 0; c < str.length; c++) {
-                let cc = str[c], nc = str[c+1];
-                arr[row] = arr[row] || []; arr[row][col] = arr[row][col] || '';
-                if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
-                if (cc == '"') { quote = !quote; continue; }
-                if (cc == ',' && !quote) { ++col; continue; }
-                if (cc == '\n' && !quote) { ++row; col = 0; continue; }
-                arr[row][col] += cc;
-            }
-            return arr;
         }
 
         function createBook(data) {
-            // 1. FRONT COVER
-            addPaper("PRECON TECHNOLOGY", "INDUSTRIAL CATALOGUE 2026", "https://via.placeholder.com/450x650/2c3e50/e67e22?text=PRECON+FOUNDRY", true);
+            // Front Cover
+            addPaper("PRECON TECHNOLOGY", "INDUSTRIAL CATALOGUE", "https://via.placeholder.com/400x500/2c3e50/e67e22?text=PRECON", true);
 
-            // 2. DYNAMIC PAGES (2 rows = 1 paper)
+            // Dynamic Pages (Title = Col 0, Desc = Col 1, Image = Col 2)
             for (let i = 0; i < data.length; i += 2) {
                 const p1 = data[i];
-                const p2 = data[i+1] || ["", "End of List", ""];
+                const p2 = data[i+1] || ["", "End of Catalogue", ""];
                 addPaper(p1[0], p1[1], p1[2], false, p2[0], p2[1], p2[2]);
             }
 
-            // 3. BACK COVER
-            addPaper("CONTACT US", "Bhiwadi, Rajasthan", "", false, "THANK YOU", "Precon Technology & Castings Ltd", "", true);
+            // Back Cover
+            addPaper("CONTACT", "Bhiwadi, Rajasthan", "", false, "FINISH", "Precon Technology", "", true);
             
             papers = document.querySelectorAll(".paper");
             resetZIndex();
@@ -191,12 +183,14 @@
             paper.classList.add("paper");
             paper.innerHTML = `
                 <div class="front ${isFC ? 'cover' : ''}">
-                    ${i1 ? `<img src="${i1}" class="product-img" onerror="this.src='https://via.placeholder.com/400x300?text=Industrial+Image'">` : ''}
-                    <h2>${t1}</h2><p>${d1}</p>
+                    ${i1 ? `<img src="${i1}" class="product-img" onerror="this.style.display='none'">` : ''}
+                    <h2>${t1 || ''}</h2>
+                    <p>${d1 || ''}</p>
                 </div>
                 <div class="back ${isBC ? 'cover' : ''}">
-                    ${i2 ? `<img src="${i2}" class="product-img" onerror="this.src='https://via.placeholder.com/400x300?text=Industrial+Image'">` : ''}
-                    <h2>${t2}</h2><p>${d2}</p>
+                    ${i2 ? `<img src="${i2}" class="product-img" onerror="this.style.display='none'">` : ''}
+                    <h2>${t2 || ''}</h2>
+                    <p>${d2 || ''}</p>
                 </div>`;
             book.appendChild(paper);
         }
