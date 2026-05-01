@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Precon Technology - Compact Catalogue</title>
+    <title>Precon Technology Catalogue</title>
     <style>
         :root {
-            /* Height kam kar di gayi hai */
-            --book-height: 500px; 
-            --book-width: 400px;
+            --book-height: 520px; 
+            --book-width: 420px;
             --cover-color: #2c3e50;
             --accent-color: #e67e22;
         }
@@ -20,13 +19,12 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding-top: 20px; /* Top se space */
+            padding-top: 20px;
             perspective: 2000px;
             font-family: 'Segoe UI', sans-serif;
             overflow-x: hidden;
         }
 
-        /* Buttons ko top par lane ke liye */
         .controls { 
             margin-bottom: 30px; 
             display: flex; 
@@ -63,14 +61,13 @@
             top: 0; left: 0;
             backface-visibility: hidden;
             background-color: white;
-            padding: 25px;
+            padding: 30px;
             box-sizing: border-box;
             border: 1px solid #ddd;
             color: #333;
-            overflow: hidden;
         }
 
-        .back { transform: rotateY(180deg); background-color: #f9f9f9; }
+        .back { transform: rotateY(180deg); background-color: #fcfcfc; }
         .flipped { transform: rotateY(-180deg); }
 
         .cover {
@@ -86,11 +83,11 @@
 
         .product-img {
             width: 100%;
-            height: 220px; /* Height ke hisaab se image choti ki hai */
+            height: 220px;
             object-fit: cover;
             border-radius: 5px;
             margin-bottom: 15px;
-            background: #eee;
+            background: #f0f0f0;
         }
 
         button {
@@ -101,22 +98,21 @@
             font-weight: bold;
             cursor: pointer;
             border-radius: 25px;
-            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        button:hover { background-color: #d35400; }
-        button:disabled { background-color: #444; opacity: 0.5; cursor: not-allowed; }
+        button:disabled { background-color: #444; opacity: 0.5; }
 
-        h2 { font-size: 1.2rem; margin: 5px 0; color: #2c3e50; }
-        p { font-size: 0.95rem; line-height: 1.4; color: #555; margin: 5px 0; }
+        h2 { font-size: 1.4rem; margin: 10px 0; color: #2c3e50; }
+        p { font-size: 1rem; line-height: 1.5; color: #444; margin-top: 10px; }
+        .page-num { position: absolute; bottom: 15px; right: 20px; font-size: 12px; color: #999; }
         #loading { color: white; margin-top: 100px; }
     </style>
 </head>
 <body>
 
-    <div id="loading">Loading Precon Catalogue...</div>
+    <div id="loading">Updating Data from Sheet...</div>
 
-    <!-- Top Buttons -->
     <div class="controls">
         <button id="prevBtn" disabled>PREVIOUS</button>
         <button id="nextBtn">NEXT PAGE</button>
@@ -145,9 +141,10 @@
                 const response = await fetch(sheetURL, { cache: 'no-store' });
                 const csvData = await response.text();
                 
-                // Rows parsing with basic CSV logic
+                // Smart CSV Parsing (Quotes aur Commas handle karne ke liye)
                 const rows = csvData.split('\n').map(row => {
-                    return row.split(',').map(cell => cell.replace(/"/g, "").trim());
+                    const matches = row.match(/(".*?"|[^",\r\n]+)(?=\s*,|\s*$|\r|\n)/g);
+                    return matches ? matches.map(m => m.replace(/^"|"$/g, "").trim()) : [];
                 });
                 
                 const products = rows.filter(r => r.length >= 2).slice(1); 
@@ -156,23 +153,25 @@
                 loading.style.display = 'none';
                 book.style.display = 'block';
             } catch (error) {
-                loading.innerText = "Check your internet or Google Sheet settings.";
+                loading.innerText = "Error loading description. Check Sheet 'Publish' status.";
             }
         }
 
         function createBook(data) {
-            // Front Cover
-            addPaper("PRECON TECHNOLOGY", "INDUSTRIAL CATALOGUE", "https://via.placeholder.com/400x500/2c3e50/e67e22?text=PRECON", true);
+            // 1. Cover Page
+            addPaper("PRECON TECHNOLOGY", "PTCL Industrial Catalogue", "", true);
 
-            // Dynamic Pages (Title = Col 0, Desc = Col 1, Image = Col 2)
+            // 2. Data Pages (A=PageNum, B=Title, C=Desc, D=Image)
             for (let i = 0; i < data.length; i += 2) {
                 const p1 = data[i];
-                const p2 = data[i+1] || ["", "End of Catalogue", ""];
-                addPaper(p1[0], p1[1], p1[2], false, p2[0], p2[1], p2[2]);
+                const p2 = data[i+1] || ["", "End", "Thank you for visiting.", ""];
+                
+                // p1[1]=Title, p1[2]=Description, p1[3]=ImageURL
+                addPaper(p1[1], p1[2], p1[3], false, p2[1], p2[2], p2[3]);
             }
 
-            // Back Cover
-            addPaper("CONTACT", "Bhiwadi, Rajasthan", "", false, "FINISH", "Precon Technology", "", true);
+            // 3. Final Back Page
+            addPaper("CONTACT US", "Bhiwadi, Rajasthan", "", false, "FINISH", "Precon Technology & Castings", "", true);
             
             papers = document.querySelectorAll(".paper");
             resetZIndex();
@@ -183,12 +182,12 @@
             paper.classList.add("paper");
             paper.innerHTML = `
                 <div class="front ${isFC ? 'cover' : ''}">
-                    ${i1 ? `<img src="${i1}" class="product-img" onerror="this.style.display='none'">` : ''}
+                    ${i1 && i1 !== "ImageURL" ? `<img src="${i1}" class="product-img" onerror="this.style.display='none'">` : ''}
                     <h2>${t1 || ''}</h2>
                     <p>${d1 || ''}</p>
                 </div>
                 <div class="back ${isBC ? 'cover' : ''}">
-                    ${i2 ? `<img src="${i2}" class="product-img" onerror="this.style.display='none'">` : ''}
+                    ${i2 && i2 !== "ImageURL" ? `<img src="${i2}" class="product-img" onerror="this.style.display='none'">` : ''}
                     <h2>${t2 || ''}</h2>
                     <p>${d2 || ''}</p>
                 </div>`;
@@ -199,14 +198,9 @@
             papers.forEach((p, i) => p.style.zIndex = papers.length - i);
         }
 
-        function playFlip() {
-            sound.currentTime = 0;
-            sound.play().catch(() => {});
-        }
-
         nextBtn.addEventListener("click", () => {
             if(currentLocation <= papers.length) {
-                playFlip();
+                sound.currentTime = 0; sound.play().catch(()=>{});
                 if(currentLocation === 1) book.classList.add("open");
                 const p = papers[currentLocation - 1];
                 p.classList.add("flipped");
@@ -218,7 +212,7 @@
 
         prevBtn.addEventListener("click", () => {
             if(currentLocation > 1) {
-                playFlip();
+                sound.currentTime = 0; sound.play().catch(()=>{});
                 if(currentLocation === 2) book.classList.remove("open");
                 const p = papers[currentLocation - 2];
                 p.classList.remove("flipped");
