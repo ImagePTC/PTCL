@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Employee Carousel with Details</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #0a1128; /* Dark background */
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .carousel-container {
+      text-align: center;
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      padding: 20px;
+    }
+
+    .carousel-container h2 {
+      font-size: 2.5rem;
+      letter-spacing: 3px;
+      margin-bottom: 30px;
+      opacity: 0.3;
+      text-transform: uppercase;
+    }
+
+    /* Cards wrapper */
+    .carousel-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 450px; /* Space for text */
+      perspective: 1000px;
+    }
+
+    /* Common Card Styling */
+    .member-card {
+      position: absolute;
+      width: 230px;
+      height: 330px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+      transition: all 0.5s ease-in-out;
+      cursor: pointer;
+      user-select: none;
+      background: #0d1b3e;
+    }
+
+    .member-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.5s ease-in-out;
+    }
+
+    /* --- DETAILS (NAME & DEPT) STYLE --- */
+    .member-details {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 10px;
+      background: linear-gradient(to top, rgba(10, 17, 40, 1) 40%, rgba(10, 17, 40, 0));
+      text-align: center;
+      transform: translateY(100%); /* Hidden by default */
+      transition: 0.4s ease-in-out;
+      opacity: 0;
+    }
+
+    .member-details h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .member-details p {
+      font-size: 0.85rem;
+      color: #3b82f6; /* Blue tint for department */
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* --- CAROUSEL STATES --- */
+
+    /* Active / Center Card */
+    .member-card.active {
+      transform: translate3d(0, -20px, 100px) scale(1.1);
+      z-index: 10;
+      filter: grayscale(0%) blur(0px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Active card effects */
+    .member-card.active img {
+      transform: translateY(-15px);
+    }
+    
+    .member-card.active .member-details {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Left / Previous Card */
+    .member-card.prev {
+      transform: translate3d(-170px, 0, 0) scale(0.85) rotateY(15deg);
+      z-index: 5;
+      filter: grayscale(80%) blur(1px);
+      opacity: 0.6;
+    }
+
+    /* Right / Next Card */
+    .member-card.next {
+      transform: translate3d(170px, 0, 0) scale(0.85) rotateY(-15deg);
+      z-index: 5;
+      filter: grayscale(80%) blur(1px);
+      opacity: 0.6;
+    }
+
+    /* Hidden Cards */
+    .member-card.hidden {
+      transform: translate3d(0, 0, -200px) scale(0.5);
+      opacity: 0;
+      z-index: 0;
+    }
+
+    /* --- NAVIGATION BUTTONS --- */
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: 0.3s;
+      z-index: 20;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .prev-btn { left: 10px; }
+    .next-btn { right: 10px; }
+
+    /* --- DOTS --- */
+    .dots-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .dot.active {
+      background: #3b82f6;
+      width: 20px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="carousel-container">
+    <h2>OUR TEAM</h2>
+    
+    <div class="carousel-wrapper">
+      
+      <div class="member-card">
+        <img src="https://lh3.googleusercontent.com/d/1X6XEm" alt="Employee 1">
+        <div class="member-details">
+          <h3>Rahul Sharma</h3>
+          <p>Web Developer</p>
+        </div>
+      </div>
+      
+      <div class="member-card">
+        <img src="https://lh3.googleusercontent.com/d/1X6XEmYu4FVJ" alt="Employee 2">
+        <div class="member-details">
+          <h3>Amit Verma</h3>
+          <p>UI/UX Designer</p>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <img src="https://lh3.googleusercontent.com/d/1X6XEmYu4F" alt="Employee 3">
+        <div class="member-details">
+          <h3>Priya Singh</h3>
+          <p>HR Manager</p>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <img src="https://lh3.googleusercontent.com/d/1X6XEmYu4FVJIkDj9XZcetLXxZBFh_" alt="Employee 4">
+        <div class="member-details">
+          <h3>Vikram Malhotra</h3>
+          <p>Marketing Head</p>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <img src="https://lh3.googleusercontent.com/d/1X6XEmYu4FVJIkDj9XZcetLXxZ" alt="Employee 5">
+        <div class="member-details">
+          <h3>Neha Gupta</h3>
+          <p>Data Analyst</p>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="nav-btn prev-btn">❮</button>
+    <button class="nav-btn next-btn">❯</button>
+
+    <div class="dots-container"></div>
+  </div>
+
+  <script>
+    const cards = document.querySelectorAll('.member-card');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const dotsContainer = document.querySelector('.dots-container');
+    
+    let currentIndex = 0;
+
+    cards.forEach((_, index) => {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if(index === currentIndex) dot.classList.add('active');
+      dot.addEventListener('click', () => {
+        currentIndex = index;
+        updateCarousel();
+      });
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.dot');
+
+    function updateCarousel() {
+      const totalCards = cards.length;
+
+      cards.forEach((card, index) => {
+        card.className = 'member-card';
+
+        if (index === currentIndex) {
+          card.classList.add('active');
+        } 
+        else if (index === (currentIndex - 1 + totalCards) % totalCards) {
+          card.classList.add('prev');
+        } 
+        else if (index === (currentIndex + 1) % totalCards) {
+          card.classList.add('next');
+        } 
+        else {
+          card.classList.add('hidden');
+        }
+      });
+
+      dots.forEach((dot, index) => {
+        dot.toggle('active', index === currentIndex);
+      });
+    }
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % cards.length;
+      updateCarousel();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+      updateCarousel();
+    });
+
+    updateCarousel();
+  </script>
+
+</body>
+</html>
