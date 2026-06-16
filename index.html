@@ -7,175 +7,121 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@600&family=Outfit:wght@200;400;800&display=swap" rel="stylesheet">
-    <style>
-        /* Modal Popup Styles */
-        .modal-overlay {
-            display: none; 
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-        }
-
-        .modal-content {
-            position: relative;
-            background-color: #1a1a1a;
-            margin: 2% auto;
-            padding: 10px;
-            border: 1px solid #444;
-            width: 90%;
-            max-width: 900px;
-            height: 85vh;
-            border-radius: 12px;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
-            overflow: hidden;
-        }
-
-        .close-btn {
-            position: absolute;
-            right: 20px;
-            top: 10px;
-            color: #fff;
-            font-size: 35px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 1001;
-            transition: 0.3s;
-        }
-
-        .close-btn:hover {
-            color: #ff4d4d;
-            transform: scale(1.1);
-        }
-
-        #modalFrame {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 8px;
-        }
-
-        /* Prevent body scroll when modal is open */
-        .no-scroll {
-            overflow: hidden;
-        }
-
-        /* Catalogue button styling to match other buttons */
-        .nav-link-btn {
-            text-decoration: none;
-            display: inline-block;
-        }
-    </style>
 </head>
 <body>
 
+    <!-- NAVBAR -->
     <nav class="glass-header">
         <div class="nav-left">
-            <img src="images/PTCL logo.png" alt="Logo" class="logo-img">
+            <div class="logo-box">
+                <i class="fa-solid fa-gear logo-gear"></i>
+            </div>
             <span class="brand-text">PTCL</span>
         </div>
 
         <div class="nav-center">
             <div class="search-container">
-                <select id="catDropdown" onchange="filterItems()">
-                    <option value="All">All Categories</option>
-                    <option value="PTCL">PTCL Series</option>
-                </select>
                 <div class="search-box">
-                    <input type="text" id="searchBar" placeholder="Search..." onkeyup="filterItems()">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="searchBar" placeholder="SEARCH COMPONENTS..." onkeyup="filterItems()">
                 </div>
+                <select id="catDropdown" onchange="filterItems()">
+                    <option value="All">ALL SERIES</option>
+                    <option value="PTCL">PTCL SERIES</option>
+                </select>
             </div>
         </div>
 
         <div class="nav-right">
-            <a href="https://www.google.com/maps/place/Precon+Technology+And+Castings+Ltd/@28.2135457,76.8392663,17z/data=!3m1!4b1!4m6!3m5!1s0x390d37f147c89a67:0x16ca4d81c5ee4115!8m2!3d28.213541!4d76.8418412!16s%2Fg%2F12m91xs0j?entry=ttu&g_ep=EgoyMDI1MTExNy4wIKXMDSoASAFQAw%3D%3D" 
-               target="_blank" class="nav-icon"><i class="fa-solid fa-location-dot"></i></a>
-            
+            <a href="https://www.google.com/maps/place/Precon+Technology+And+Castings+Ltd/@28.2135457,76.8392663,17z" 
+               target="_blank" class="nav-icon" title="Location">
+                <i class="fa-solid fa-location-dot"></i>
+            </a>
             <a href="https://www.linkedin.com/in/precon-technology-and-casting-ltd-bhiwadi-22129539b/" 
-               target="_blank" class="nav-icon"><i class="fa-brands fa-linkedin"></i></a>
-            
-            <!-- Buttons -->
-            <button class="nav-btn btn-outline" onclick="openFormModal('int.html')">Introduction</button>
-                        <button class="nav-btn btn-outline" onclick="openFormModal('Team.html')">Our Team</button>
-
-            <!-- Catalogue: Changed to <a> tag with target="_blank" -->
-            <a href="https://script.google.com/macros/s/AKfycbyuoSTvJhZa7cavIzcl0tpujI-K-X8aqzEU1toOjRcOkK8rr9SufJGhm-LXySq8HyJL/exec" 
-               target="_blank" class="nav-link-btn">
-                <button class="nav-btn btn-solid">Catalogue</button>
+               target="_blank" class="nav-icon" title="LinkedIn">
+                <i class="fa-brands fa-linkedin"></i>
             </a>
 
-            <button class="nav-btn btn-solid" onclick="openFormModal('feedback.html')">Feedback</button>
+            <button class="nav-btn btn-ghost" onclick="openModal('int.html', 'Introduction')">Introduction</button>
+            <button class="nav-btn btn-ghost" onclick="openModal('Team.html', 'Our Team')">Our Team</button>
+            <a href="https://script.google.com/macros/s/AKfycbyuoSTvJhZa7cavIzcl0tpujI-K-X8aqzEU1toOjRcOkK8rr9SufJGhm-LXySq8HyJL/exec" 
+               target="_blank" class="nav-btn btn-ghost" style="text-decoration:none;">Catalogue</a>
+            <button class="nav-btn btn-solid" onclick="openModal('feedback.html', 'Feedback')">Feedback</button>
         </div>
     </nav>
 
+    <!-- HERO -->
     <header class="main-hero">
+        <div class="hero-glow"></div>
+        <div class="hero-rings">
+            <div class="ring ring-1"></div>
+            <div class="ring ring-2"></div>
+        </div>
         <div class="hero-content">
-            <p class="tagline">ENGINEERED PRECISION</p>
-            <h1 class="company-name">PRECON TECHNOLOGY AND CASTINGS LTD.</h1>
+            <div class="tagline-row">
+                <span class="tagline-line"></span>
+                <p class="tagline">ENGINEERED PRECISION</p>
+                <span class="tagline-line"></span>
+            </div>
+            <h1 class="company-name">
+                PRECON TECHNOLOGY<br>
+                <span class="company-name-red">AND CASTINGS LTD.</span>
+            </h1>
+            <p class="hero-sub">Delivering high-quality metal castings, automotive components,<br>and industrial valve parts with zero compromise on engineering standards.</p>
         </div>
     </header>
 
-    <main class="slider-wrapper">
-        <div class="nav-arrow left-arrow" onclick="moveSlider('left')"><i class="fa-solid fa-chevron-left"></i></div>
-        <div class="tiered-container">
-            <div class="layer layer-1"></div>
-            <div class="layer layer-2"></div>
-            <div class="layer layer-3">
-                <div class="horizontal-scroll" id="productGrid">
-                    <!-- Cards are injected by script.js -->
-                </div>
+    <!-- PRODUCT MARQUEE SECTION -->
+    <section class="products-section">
+        <div class="section-topline"></div>
+
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Our Components</h2>
+                <p class="section-count" id="itemCount">27 Items</p>
+            </div>
+            <span class="section-hint">Hover to pause &middot; Scroll to explore</span>
+        </div>
+
+        <div class="marquee-mask">
+            <div class="marquee-track" id="marqueeTrack">
+                <!-- Cards injected by script.js -->
             </div>
         </div>
-        <div class="nav-arrow right-arrow" onclick="moveSlider('right')"><i class="fa-solid fa-chevron-right"></i></div>
-    </main>
 
-    <footer class="bottom-address-container">
-        <p class="footer-address">ADDRESS B-480 RIICO IND. AREA, BHIWADI, RAJASTHAN-301019, INDIA</p>
-        <div class="footer-decorators">
-            <div class="line-red"></div>
-            <div class="star-icon">✦</div>
-            <div class="line-red"></div>
+        <div class="no-results" id="noResults" style="display:none;">
+            No components found matching your criteria.
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-logo-box">
+                <i class="fa-solid fa-gear footer-gear"></i>
+            </div>
+            <h4 class="footer-title">Precon Technology And Castings Ltd.</h4>
+            <p class="footer-address">B-480 RIICO IND. AREA, BHIWADI, RAJASTHAN-301019, INDIA</p>
+            <div class="footer-decorators">
+                <div class="line-red"></div>
+                <span class="star-icon">&#10022;</span>
+                <div class="line-red"></div>
+            </div>
+            <p class="footer-copy">&copy; <span id="year"></span> PTCL &nbsp;&bull;&nbsp; All Rights Reserved</p>
         </div>
     </footer>
 
-    <!-- Modal Structure -->
-    <div id="formModal" class="modal-overlay">
+    <!-- MODAL -->
+    <div id="modal" class="modal-overlay" onclick="handleModalClick(event)">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeFormModal()">&times;</span>
+            <div class="modal-header">
+                <span id="modalTitle" class="modal-title"></span>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
             <iframe id="modalFrame" src="" frameborder="0"></iframe>
         </div>
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // Modal Logic (For Intro and Feedback)
-        function openFormModal(url) {
-            const modal = document.getElementById('formModal');
-            const frame = document.getElementById('modalFrame');
-            frame.src = url;
-            modal.style.display = 'block';
-            document.body.classList.add('no-scroll');
-        }
-
-        function closeFormModal() {
-            const modal = document.getElementById('formModal');
-            const frame = document.getElementById('modalFrame');
-            modal.style.display = 'none';
-            frame.src = ""; 
-            document.body.classList.remove('no-scroll');
-        }
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('formModal');
-            if (event.target == modal) {
-                closeFormModal();
-            }
-        }
-    </script>
 </body>
 </html>
