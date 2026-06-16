@@ -1,124 +1,488 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PTCL - Customer Feedback</title>
-    <style>
-        :root { --ptcl-red: #8B0000; --ptcl-black: #000000; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; padding: 20px; }
-        .form-container { max-width: 850px; margin: 0 auto; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; border-top: 8px solid var(--ptcl-red); }
-        .header { background: var(--ptcl-black); color: white; padding: 30px; text-align: center; }
-        .header img { height: 60px; margin-bottom: 10px; }
-        .form-body { padding: 35px; }
-        .section-title { font-size: 1.1rem; color: var(--ptcl-red); border-bottom: 2px solid #eee; padding-bottom: 8px; margin: 25px 0 15px 0; font-weight: bold; text-transform: uppercase; }
-        .grid-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        .rating-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .rating-table th { background: #f8f9fa; padding: 12px; font-size: 0.85rem; }
-        .rating-table td { padding: 12px; text-align: center; border-bottom: 1px solid #eee; }
-        .rating-table td:first-child { text-align: left; font-weight: 500; width: 40%; }
-        .btn-submit { background: var(--ptcl-red); color: white; border: none; padding: 15px; font-size: 1.1rem; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 30px; }
-        #success-msg { display: none; background: #d4edda; color: #155724; padding: 25px; border-radius: 8px; text-align: center; margin-top: 20px; font-weight: bold; border: 1px solid #c3e6cb; font-size: 1.2rem; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Feedback - PTCL</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #8B0000;
+      --red-dark: #5a0000;
+      --yellow: #ffcc00;
+      --black: #0d0d0d;
+      --white: #ffffff;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background: #eef0f3;
+      color: var(--gray-800);
+      min-height: 100vh;
+      padding: 30px 16px 60px;
+    }
+
+    .wrapper {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* FORM CARD */
+    .form-card {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.04), 0 20px 40px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    /* HEADER */
+    .form-header {
+      background: var(--black);
+      padding: 36px 40px;
+      text-align: center;
+      position: relative;
+      border-bottom: 4px solid var(--red);
+    }
+    .form-header::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--red), var(--yellow), var(--red));
+    }
+    .form-logo {
+      height: 60px;
+      margin-bottom: 16px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.08);
+      padding: 5px;
+    }
+    .form-header h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .form-header p {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.85rem;
+      margin-top: 6px;
+    }
+
+    /* FORM BODY */
+    .form-body {
+      padding: 40px;
+    }
+
+    /* SECTION HEADING */
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin: 32px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--gray-100);
+    }
+    .section-heading:first-of-type { margin-top: 0; }
+
+    /* FIELDS */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .field:last-child { margin-bottom: 0; }
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+    label .required {
+      color: var(--red);
+      margin-left: 2px;
+    }
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--gray-800);
+      background: var(--gray-50);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(139,0,0,0.08);
+      background: var(--white);
+    }
+    input.error, select.error { border-color: #dc2626; }
+    textarea { resize: vertical; min-height: 100px; }
+    .error-msg {
+      font-size: 0.75rem;
+      color: #dc2626;
+      display: none;
+    }
+    .error-msg.show { display: block; }
+
+    /* RATING TABLE */
+    .rating-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    .rating-table thead tr {
+      background: var(--gray-50);
+    }
+    .rating-table th {
+      padding: 12px 10px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      color: var(--gray-600);
+      text-align: center;
+      border-bottom: 2px solid var(--gray-200);
+    }
+    .rating-table th:first-child { text-align: left; width: 45%; }
+    .rating-table td {
+      padding: 12px 10px;
+      text-align: center;
+      border-bottom: 1px solid var(--gray-100);
+      vertical-align: middle;
+    }
+    .rating-table td:first-child {
+      text-align: left;
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+    .rating-table tr:hover td { background: var(--gray-50); }
+
+    /* CUSTOM RADIO STARS */
+    .rating-cell {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .star-radio {
+      display: none;
+    }
+    .star-label {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gray-400);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .star-radio:checked + .star-label {
+      background: var(--red);
+      border-color: var(--red);
+      color: var(--white);
+      transform: scale(1.15);
+    }
+    .star-label:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    /* SUBMIT */
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      margin-top: 32px;
+      transition: background 0.2s, transform 0.15s;
+      text-transform: uppercase;
+    }
+    .submit-btn:hover { background: #a50000; }
+    .submit-btn:active { transform: scale(0.99); }
+    .submit-btn:disabled { background: #999; cursor: not-allowed; }
+
+    /* SUCCESS STATE */
+    .success-state {
+      display: none;
+      padding: 60px 40px;
+      text-align: center;
+    }
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background: #d1fae5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 20px;
+    }
+    .success-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--gray-800);
+      margin-bottom: 10px;
+    }
+    .success-sub {
+      font-size: 0.95rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    /* ERROR BANNER */
+    .error-banner {
+      display: none;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 0.87rem;
+      color: #dc2626;
+      margin-top: 16px;
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 24px;
+      color: var(--gray-400);
+      font-size: 0.78rem;
+    }
+
+    @media (max-width: 600px) {
+      .form-body { padding: 24px 20px; }
+      .form-header { padding: 28px 20px; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .rating-table { font-size: 0.82rem; }
+      .star-label { width: 26px; height: 26px; font-size: 0.7rem; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="form-container">
-    <div class="header">
-        <img src="https://drive.google.com/thumbnail?id=1PHprB2Xz7zgnn1YgixJ89__Ok19MjN2R&sz=w500" alt="PTCL Logo">
-        <h1>Customer Satisfaction Survey</h1>
+<div class="wrapper">
+  <div class="form-card">
+    <div class="form-header">
+      <img src="https://drive.google.com/thumbnail?id=1PHprB2Xz7zgnn1YgixJ89__Ok19MjN2R&sz=w500" alt="PTCL Logo" class="form-logo">
+      <h1>Customer Satisfaction Survey</h1>
+      <p>Your feedback helps us serve you better. All responses are confidential.</p>
     </div>
 
-    <form class="form-body" id="customerForm">
-        <!-- Details Section -->
-        <div class="grid-row">
-            <div><label>Company Name</label><input type="text" name="company" placeholder="Enter Company Name" required></div>
-            <div><label>Contact Person Name</label><input type="text" name="name" placeholder="Your Name" required></div>
-        </div>
-        <div class="grid-row">
-            <div><label>Designation</label><input type="text" name="designation" placeholder="e.g. Purchase Manager" required></div>
-            <div><label>Email Address</label><input type="email" name="email" placeholder="email@company.com" required></div>
-        </div>
-        <div style="margin-bottom: 20px;">
-            <label>Item / Part Names (Supply Description)</label>
-            <input type="text" name="items" placeholder="e.g. Graded Castings, Flywheels, etc.">
+    <div class="form-body" id="formBody">
+      <form id="feedbackForm" novalidate>
+
+        <div class="section-heading">Customer Details</div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="company">Company Name <span class="required">*</span></label>
+            <input type="text" id="company" name="company" placeholder="Enter company name">
+            <div class="error-msg" id="err-company">Company name is required.</div>
+          </div>
+          <div class="field">
+            <label for="name">Contact Person Name <span class="required">*</span></label>
+            <input type="text" id="name" name="name" placeholder="Your full name">
+            <div class="error-msg" id="err-name">Contact person name is required.</div>
+          </div>
         </div>
 
-        <!-- Technical Section -->
-        <div class="section-title">Technical & Service Evaluation</div>
-        <p style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">Rating: 1-Poor, 2-Fair, 3-Good, 4-Very Good, 5-Excellent</p>
+        <div class="grid-2">
+          <div class="field">
+            <label for="designation">Designation <span class="required">*</span></label>
+            <input type="text" id="designation" name="designation" placeholder="e.g. Purchase Manager">
+            <div class="error-msg" id="err-designation">Designation is required.</div>
+          </div>
+          <div class="field">
+            <label for="email">Email Address <span class="required">*</span></label>
+            <input type="email" id="email" name="email" placeholder="email@company.com">
+            <div class="error-msg" id="err-email">A valid email address is required.</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="items">Item / Part Names (Supply Description)</label>
+          <input type="text" id="items" name="items" placeholder="e.g. Graded Castings, Flywheels, etc.">
+        </div>
+
+        <div class="section-heading">Technical &amp; Service Evaluation</div>
+        <p style="font-size:0.8rem; color:var(--gray-600); margin-bottom:14px;">Rate each parameter from 1 (Poor) to 5 (Excellent)</p>
+
         <table class="rating-table">
-            <thead><tr><th>Performance Parameters</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
-            <tbody>
-                <tr><td>Casting Surface Finish & Aesthetics</td><td><input type="radio" name="finish" value="1" required></td><td><input type="radio" name="finish" value="2"></td><td><input type="radio" name="finish" value="3"></td><td><input type="radio" name="finish" value="4"></td><td><input type="radio" name="finish" value="5"></td></tr>
-                <tr><td>Dimensional Accuracy (As per Drawing)</td><td><input type="radio" name="dim" value="1" required></td><td><input type="radio" name="dim" value="2"></td><td><input type="radio" name="dim" value="3"></td><td><input type="radio" name="dim" value="4"></td><td><input type="radio" name="dim" value="5"></td></tr>
-                <tr><td>Metallurgical Quality (Grade/Hardness)</td><td><input type="radio" name="metal" value="1" required></td><td><input type="radio" name="metal" value="2"></td><td><input type="radio" name="metal" value="3"></td><td><input type="radio" name="metal" value="4"></td><td><input type="radio" name="metal" value="5"></td></tr>
-                <tr><td>Adherence to Delivery Schedule</td><td><input type="radio" name="del" value="1" required></td><td><input type="radio" name="del" value="2"></td><td><input type="radio" name="del" value="3"></td><td><input type="radio" name="del" value="4"></td><td><input type="radio" name="del" value="5"></td></tr>
-                <tr><td>Responsiveness & Communication</td><td><input type="radio" name="comm" value="1" required></td><td><input type="radio" name="comm" value="2"></td><td><input type="radio" name="comm" value="3"></td><td><input type="radio" name="comm" value="4"></td><td><input type="radio" name="comm" value="5"></td></tr>
-                <tr><td>Packaging & Identification (Labeling)</td><td><input type="radio" name="pack" value="1" required></td><td><input type="radio" name="pack" value="2"></td><td><input type="radio" name="pack" value="3"></td><td><input type="radio" name="pack" value="4"></td><td><input type="radio" name="pack" value="5"></td></tr>
-            </tbody>
+          <thead>
+            <tr>
+              <th>Performance Parameters</th>
+              <th>1<br><small style="font-weight:400">Poor</small></th>
+              <th>2<br><small style="font-weight:400">Fair</small></th>
+              <th>3<br><small style="font-weight:400">Good</small></th>
+              <th>4<br><small style="font-weight:400">V.Good</small></th>
+              <th>5<br><small style="font-weight:400">Excellent</small></th>
+            </tr>
+          </thead>
+          <tbody id="ratingTableBody">
+          </tbody>
         </table>
 
-        <!-- Behavioral Section (As per Image) -->
-        <div class="section-title">Behavioral & Support</div>
-        <div class="grid-row">
-            <div>
-                <label>Technical Support / Problem Solving</label>
-                <select name="tech_support">
-                    <option value="Excellent">Excellent</option>
-                    <option value="Satisfactory">Satisfactory</option>
-                    <option value="Needs Improvement">Needs Improvement</option>
-                </select>
-            </div>
-            <div>
-                <label>Staff Professionalism/Behavior</label>
-                <select name="behavior">
-                    <option value="Very Professional">Very Professional</option>
-                    <option value="Courteous">Courteous</option>
-                    <option value="Average">Average</option>
-                </select>
-            </div>
+        <div class="section-heading" style="margin-top:28px;">Behavioral &amp; Support</div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="tech_support">Technical Support / Problem Solving</label>
+            <select id="tech_support" name="tech_support">
+              <option value="Excellent">Excellent</option>
+              <option value="Satisfactory">Satisfactory</option>
+              <option value="Needs Improvement">Needs Improvement</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="behavior">Staff Professionalism / Behavior</label>
+            <select id="behavior" name="behavior">
+              <option value="Very Professional">Very Professional</option>
+              <option value="Courteous">Courteous</option>
+              <option value="Average">Average</option>
+            </select>
+          </div>
         </div>
 
-        <div style="margin-top:20px;">
-            <label>Specific Suggestions</label>
-            <textarea name="suggestions" rows="4"></textarea>
+        <div class="field" style="margin-top:4px;">
+          <label for="suggestions">Specific Suggestions</label>
+          <textarea id="suggestions" name="suggestions" rows="4" placeholder="Any suggestions to help us improve..."></textarea>
         </div>
 
-        <button type="submit" class="btn-submit" id="submitBtn">Submit Feedback to PTCL</button>
-    </form>
-    
-    <div id="success-msg">
-        Thank you for your valuable feedback! We will use this to improve our partnership.
+        <button type="submit" class="submit-btn" id="submitBtn">Submit Feedback to PTCL</button>
+        <div class="error-banner" id="errorBanner">
+          Submission failed. Please check your connection and try again.
+        </div>
+
+      </form>
     </div>
+
+    <div class="success-state" id="successState">
+      <div class="success-icon">&#10003;</div>
+      <div class="success-title">Thank You for Your Feedback!</div>
+      <div class="success-sub">We have received your response and will use it to continually improve our partnership with you. We appreciate your time and trust in PTCL.</div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2024 Precon Technology and Castings Ltd. &mdash; All Rights Reserved
+  </footer>
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyll6-3wJRKut9B79kZwEnd8HzoCyucZauH4xRNGGYxl2qJvJUPP-cIjtgrvwOHn1VKEA/exec';
-    const form = document.getElementById('customerForm');
-    const successMsg = document.getElementById('success-msg');
-    const submitBtn = document.getElementById('submitBtn');
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyll6-3wJRKut9B79kZwEnd8HzoCyucZauH4xRNGGYxl2qJvJUPP-cIjtgrvwOHn1VKEA/exec';
 
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        submitBtn.disabled = true;
-        submitBtn.innerText = "Submitting...";
+  // Render rating table rows
+  const ratingParams = [
+    { label: 'Casting Surface Finish & Aesthetics', name: 'finish' },
+    { label: 'Dimensional Accuracy (As per Drawing)', name: 'dim' },
+    { label: 'Metallurgical Quality (Grade/Hardness)', name: 'metal' },
+    { label: 'Adherence to Delivery Schedule', name: 'del' },
+    { label: 'Responsiveness & Communication', name: 'comm' },
+    { label: 'Packaging & Identification (Labeling)', name: 'pack' },
+  ];
 
-        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-            .then(response => {
-                form.style.display = 'none';
-                successMsg.style.display = 'block';
-                window.scrollTo(0,0);
-            })
-            .catch(error => {
-                alert('Error! Please try again.');
-                submitBtn.disabled = false;
-                submitBtn.innerText = "Submit Feedback to PTCL";
-            });
+  const tbody = document.getElementById('ratingTableBody');
+  ratingParams.forEach(param => {
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>${param.label}</td>` +
+      [1,2,3,4,5].map(val => `
+        <td>
+          <div class="rating-cell">
+            <input type="radio" class="star-radio" name="${param.name}" id="${param.name}_${val}" value="${val}">
+            <label class="star-label" for="${param.name}_${val}">${val}</label>
+          </div>
+        </td>
+      `).join('');
+    tbody.appendChild(row);
+  });
+
+  // Form validation & submission
+  const form = document.getElementById('feedbackForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const errorBanner = document.getElementById('errorBanner');
+
+  function validateField(id, errId, validator) {
+    const el = document.getElementById(id);
+    const err = document.getElementById(errId);
+    const valid = validator(el.value.trim());
+    el.classList.toggle('error', !valid);
+    err.classList.toggle('show', !valid);
+    return valid;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBanner.style.display = 'none';
+
+    const v1 = validateField('company', 'err-company', v => v.length > 0);
+    const v2 = validateField('name', 'err-name', v => v.length > 0);
+    const v3 = validateField('designation', 'err-designation', v => v.length > 0);
+    const v4 = validateField('email', 'err-email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+
+    if (!v1 || !v2 || !v3 || !v4) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    const formData = new FormData(form);
+
+    try {
+      await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+      document.getElementById('formBody').style.display = 'none';
+      document.getElementById('successState').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      errorBanner.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Feedback to PTCL';
+    }
+  });
+
+  // Clear error on input
+  ['company','name','designation','email'].forEach(id => {
+    document.getElementById(id).addEventListener('input', function() {
+      this.classList.remove('error');
+      document.getElementById('err-' + id).classList.remove('show');
     });
+  });
 </script>
-
 </body>
 </html>
