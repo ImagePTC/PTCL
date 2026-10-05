@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalogue Request</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --iron:#1D1E21;        /* cast iron – panel */
+  --slag:#2C2E33;        /* slag grey – fields */
+  --slag-line:#464850;   /* borders */
+  --sand:#E6DCCB;        /* moulding sand – text on dark */
+  --molten:#FF7A1A;      /* molten metal – primary */
+  --ember:#C23A14;       /* ember red – glow end / errors */
+  --steel:#9AA0A8;       /* muted text */
+  --ok:#6FCF8E;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;background:#f3f3f1;color:#222;min-height:100vh}
+
+/* ---------- Catalogue button (put this on your site) ---------- */
+.catalogue-btn{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:var(--molten);color:#1D1E21;border:0;cursor:pointer;
+  font:700 1.15rem 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;
+  padding:.85rem 1.6rem;border-radius:3px;
+  box-shadow:0 3px 0 var(--ember);
+  transition:transform .12s, box-shadow .12s;
+}
+.catalogue-btn:hover{transform:translateY(2px);box-shadow:0 1px 0 var(--ember)}
+.catalogue-btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.demo{display:grid;place-items:center;min-height:100vh}
+
+/* ---------- Modal ---------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(10,10,12,.78);
+  display:none;align-items:flex-start;justify-content:center;
+  overflow-y:auto;padding:2rem 1rem;z-index:1000;
+}
+.overlay.open{display:flex}
+.panel{
+  position:relative;width:100%;max-width:640px;background:var(--iron);color:var(--sand);
+  border-radius:4px;overflow:hidden;
+  animation:rise .25s ease-out;
+}
+@keyframes rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+
+/* The pour line: fills with molten metal as the form is completed */
+.pour{height:8px;background:#0e0e10;position:relative}
+.pour i{
+  position:absolute;left:0;top:0;bottom:0;width:0%;
+  background:linear-gradient(90deg,var(--ember),var(--molten) 70%,#FFD08A);
+  box-shadow:0 0 14px 2px rgba(255,122,26,.7);
+  transition:width .35s ease;
+}
+
+header.ph{padding:1.6rem 1.8rem 1rem;display:flex;justify-content:space-between;gap:1rem}
+header.ph h2{
+  margin:0;font:700 2.1rem/1 'Barlow Condensed',sans-serif;letter-spacing:.03em;text-transform:uppercase;color:#fff
+}
+header.ph p{margin:.5rem 0 0;color:var(--steel);font-size:.92rem;max-width:42ch;line-height:1.45}
+.close{
+  background:none;border:1px solid var(--slag-line);color:var(--sand);
+  width:36px;height:36px;border-radius:3px;font-size:1.3rem;cursor:pointer;flex:none;
+}
+.close:hover{border-color:var(--molten);color:var(--molten)}
+
+form{padding:0 1.8rem 1.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.1rem}
+.full{grid-column:1/-1}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+
+fieldset{border:0;margin:1.4rem 0 0;padding:0}
+legend{
+  font:600 1.1rem 'Barlow Condensed',sans-serif;letter-spacing:.05em;
+  color:var(--molten);padding:0;margin-bottom:.7rem;
+}
+label.f{display:block;font-size:.82rem;color:var(--sand);font-weight:500}
+label.f span.req{color:var(--molten)}
+input[type=text],input[type=email],input[type=tel],select,textarea{
+  width:100%;margin-top:.35rem;background:var(--slag);color:#fff;
+  border:1px solid var(--slag-line);border-bottom:2px solid var(--slag-line);
+  border-radius:3px;padding:.65rem .75rem;font:400 .95rem 'IBM Plex Sans',sans-serif;
+}
+textarea{min-height:84px;resize:vertical}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--steel) 50%),linear-gradient(135deg,var(--steel) 50%,transparent 50%);background-position:calc(100% - 18px) 55%,calc(100% - 13px) 55%;background-size:5px 5px;background-repeat:no-repeat}
+input:focus,select:focus,textarea:focus{outline:none;border-bottom-color:var(--molten);box-shadow:0 2px 0 0 rgba(255,122,26,.25)}
+input.bad,select.bad{border-color:var(--ember);border-bottom-color:var(--ember)}
+.err{color:#FF8A66;font-size:.76rem;margin-top:.25rem;min-height:0;display:none}
+.bad + .err{display:block}
+
+/* material chips */
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chips label{cursor:pointer}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips span{
+  display:inline-block;padding:.45rem .85rem;border:1px solid var(--slag-line);border-radius:3px;
+  font-size:.85rem;background:var(--slag);transition:background .12s,color .12s,border-color .12s;
+}
+.chips input:checked + span{background:var(--molten);color:#1D1E21;border-color:var(--molten);font-weight:600}
+.chips input:focus-visible + span{outline:2px solid #fff;outline-offset:2px}
+
+.consent{display:flex;gap:.6rem;align-items:flex-start;font-size:.8rem;color:var(--steel);margin-top:1.2rem;line-height:1.4}
+.consent input{margin-top:.2rem;accent-color:var(--molten)}
+
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.submit{
+  margin-top:1.4rem;width:100%;background:var(--molten);color:#1D1E21;border:0;cursor:pointer;
+  font:700 1.2rem 'Barlow Condensed',sans-serif;letter-spacing:.07em;text-transform:uppercase;
+  padding:.95rem;border-radius:3px;box-shadow:0 3px 0 var(--ember);
+}
+.submit:hover{filter:brightness(1.06)}
+.submit:disabled{opacity:.6;cursor:wait}
+.submit:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.formerr{color:#FF8A66;font-size:.85rem;margin-top:.8rem;display:none}
+
+/* success */
+.done{display:none;padding:2.4rem 1.8rem 2.2rem;text-align:left}
+.done h3{margin:0 0 .5rem;font:700 1.9rem 'Barlow Condensed',sans-serif;color:#fff;text-transform:uppercase}
+.done p{color:var(--sand);line-height:1.5;max-width:46ch}
+.done a.dl{
+  display:inline-block;margin-top:1rem;background:var(--molten);color:#1D1E21;text-decoration:none;
+  font:700 1.15rem 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;
+  padding:.8rem 1.5rem;border-radius:3px;box-shadow:0 3px 0 var(--ember)
+}
+.panel.sent form,.panel.sent header.ph p{display:none}
+.panel.sent .done{display:block}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ===== 1) BUTTON: yeh apni website me jahan chahiye wahan lagao ===== -->
+<div class="demo">
+  <button class="catalogue-btn" id="openCatalogue" type="button">Download Catalogue</button>
+</div>
+
+<!-- ===== 2) FORM POPUP ===== -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="ttl">
+  <div class="panel" id="panel">
+    <div class="pour" aria-hidden="true"><i id="pourFill"></i></div>
+
+    <header class="ph">
+      <div>
+        <h2 id="ttl">Get our catalogue</h2>
+        <p>Tell us a little about your requirement. Our team will also reach out with a quotation if you need one.</p>
+      </div>
+      <button class="close" id="closeBtn" type="button" aria-label="Close">&times;</button>
+    </header>
+
+    <form id="catForm" novalidate>
+      <!-- spam trap -->
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <fieldset>
+        <legend>Your details</legend>
+        <div class="grid">
+          <div>
+            <label class="f">Full name <span class="req">*</span>
+              <input type="text" name="name" autocomplete="name" data-req></label><div class="err">Enter your name.</div>
+          </div>
+          <div>
+            <label class="f">Designation
+              <input type="text" name="designation" autocomplete="organization-title" placeholder="e.g. Purchase Manager"></label>
+          </div>
+          <div>
+            <label class="f">Company name <span class="req">*</span>
+              <input type="text" name="company" autocomplete="organization" data-req></label><div class="err">Enter your company name.</div>
+          </div>
+          <div>
+            <label class="f">GST number
+              <input type="text" name="gst" maxlength="15" placeholder="Optional"></label>
+          </div>
+          <div>
+            <label class="f">Email <span class="req">*</span>
+              <input type="email" name="email" autocomplete="email" data-req data-email></label><div class="err">Enter a valid email address.</div>
+          </div>
+          <div>
+            <label class="f">Mobile / WhatsApp <span class="req">*</span>
+              <input type="tel" name="phone" autocomplete="tel" data-req data-phone placeholder="+91"></label><div class="err">Enter a valid phone number.</div>
+          </div>
+          <div>
+            <label class="f">City <span class="req">*</span>
+              <input type="text" name="city" autocomplete="address-level2" data-req></label><div class="err">Enter your city.</div>
+          </div>
+          <div>
+            <label class="f">State / Country <span class="req">*</span>
+              <input type="text" name="state" autocomplete="address-level1" data-req></label><div class="err">Enter your state or country.</div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Your requirement</legend>
+        <div class="grid">
+          <div>
+            <label class="f">Industry <span class="req">*</span>
+              <select name="industry" data-req>
+                <option value="">Select industry</option>
+                <option>Automotive</option>
+                <option>Pumps &amp; Valves</option>
+                <option>Railways</option>
+                <option>Construction &amp; Earth Moving</option>
+                <option>Power &amp; Energy</option>
+                <option>Agriculture</option>
+                <option>Machine Tools</option>
+                <option>Trader / Dealer</option>
+                <option>Other</option>
+              </select></label><div class="err">Select your industry.</div>
+          </div>
+          <div>
+            <label class="f">Expected monthly quantity
+              <select name="quantity">
+                <option value="">Select</option>
+                <option>Sample / Prototype</option>
+                <option>Up to 1 tonne</option>
+                <option>1 – 5 tonnes</option>
+                <option>5 – 20 tonnes</option>
+                <option>20+ tonnes</option>
+              </select></label>
+          </div>
+          <div class="full">
+            <div class="f" style="font-size:.82rem;font-weight:500;margin-bottom:.45rem">Material of interest</div>
+            <div class="chips">
+              <label><input type="checkbox" name="material" value="Grey Iron"><span>Grey Iron</span></label>
+              <label><input type="checkbox" name="material" value="SG / Ductile Iron"><span>SG / Ductile Iron</span></label>
+              <label><input type="checkbox" name="material" value="Alloy Steel"><span>Alloy Steel</span></label>
+              <label><input type="checkbox" name="material" value="Carbon Steel"><span>Carbon Steel</span></label>
+              <label><input type="checkbox" name="material" value="Stainless Steel"><span>Stainless Steel</span></label>
+              <label><input type="checkbox" name="material" value="Non-ferrous"><span>Non-ferrous</span></label>
+            </div>
+          </div>
+          <div class="full">
+            <label class="f">Message
+              <textarea name="message" placeholder="Part name, drawing availability, weight range, anything else we should know"></textarea></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <label class="consent">
+        <input type="checkbox" id="consent" data-req>
+        <span>I agree to be contacted by the company about my request.</span>
+      </label>
+
+      <button class="submit" id="submitBtn" type="submit">Send &amp; get catalogue</button>
+      <div class="formerr" id="formErr">Could not send. Check your internet and try again.</div>
+    </form>
+
+    <div class="done" id="done">
+      <h3>Request received</h3>
+      <p>Thank you. Our team has your details and will get in touch shortly.</p>
+      <a class="dl" id="dlLink" href="#" target="_blank" rel="noopener">Download catalogue</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============ SETTINGS: sirf yeh 2 line badlo ============ */
+const ENDPOINT      = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';   // Code.gs deploy karke milega
+const CATALOGUE_URL = 'PASTE_YOUR_CATALOGUE_PDF_LINK_HERE';        // PDF ka link
+/* ======================================================== */
+
+const $ = s => document.querySelector(s);
+const overlay = $('#overlay'), form = $('#catForm'), panel = $('#panel');
+let lastFocus;
+
+function openForm(){ lastFocus = document.activeElement; overlay.classList.add('open'); document.body.style.overflow='hidden'; form.name.focus(); }
+function closeForm(){ overlay.classList.remove('open'); document.body.style.overflow=''; lastFocus && lastFocus.focus(); }
+$('#openCatalogue').addEventListener('click', openForm);
+$('#closeBtn').addEventListener('click', closeForm);
+overlay.addEventListener('mousedown', e => { if(e.target===overlay) closeForm(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape' && overlay.classList.contains('open')) closeForm(); });
+
+/* pour-line progress: required fields filled */
+const reqs = [...form.querySelectorAll('[data-req]')];
+function filled(el){ return el.type==='checkbox' ? el.checked : el.value.trim()!==''; }
+function updatePour(){
+  const n = reqs.filter(filled).length;
+  $('#pourFill').style.width = (n/reqs.length*100)+'%';
+}
+form.addEventListener('input', updatePour);
+form.addEventListener('change', updatePour);
+
+function valid(el){
+  if(el.type==='checkbox') return el.checked;
+  const v = el.value.trim();
+  if(!v) return false;
+  if(el.hasAttribute('data-email')) return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  if(el.hasAttribute('data-phone')) return v.replace(/\D/g,'').length >= 10;
+  return true;
+}
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  let ok = true, first = null;
+  reqs.forEach(el => {
+    const good = valid(el);
+    if(el.type!=='checkbox') el.classList.toggle('bad', !good);
+    if(!good){ ok=false; first = first || el; }
+  });
+  if(!ok){ first.focus(); return; }
+
+  const btn = $('#submitBtn'); btn.disabled = true; btn.textContent = 'Sending…';
+  $('#formErr').style.display='none';
+
+  const data = new URLSearchParams();
+  new FormData(form).forEach((v,k)=>data.append(k,v));   // multiple materials bhi aa jayenge
+  data.append('page', location.href);
+
+  try{
+    await fetch(ENDPOINT, { method:'POST', body:data, mode:'no-cors' });
+    $('#dlLink').href = CATALOGUE_URL;
+    panel.classList.add('sent');
+    $('#pourFill').style.width='100%';
+    window.open(CATALOGUE_URL, '_blank');
+  }catch(err){
+    $('#formErr').style.display='block';
+    btn.disabled=false; btn.textContent='Send & get catalogue';
+  }
+});
+</script>
+</body>
+</html>
